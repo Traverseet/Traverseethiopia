@@ -1,0 +1,2325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>Traverse Ethiopia Tour - Explore Ethiopia</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Leaflet Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Socket.io -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        /* ============================================================
+           COMPLETE CSS - TRAVERSE ETHIOPIA TOUR
+           ============================================================ */
+        
+        /* ===== ROOT VARIABLES ===== */
+        :root {
+            --primary-red: #c41e3a;
+            --primary-green: #006b3f;
+            --primary-yellow: #fcdd09;
+            --dark-bg: #1a1a2e;
+            --sidebar-bg: #0d0d1a;
+            --sidebar-hover: rgba(255,255,255,0.08);
+            --card-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #1a1a2e; min-height: 100vh; transition: background 0.3s, color 0.3s; }
+        
+        /* ===== DARK MODE ===== */
+        body.dark-mode { background: #0d0d1a; color: #e4e4e4; }
+        body.dark-mode .card { background: #1a1a2e; border-color: #2d2d44; }
+        body.dark-mode .navbar { background: #1a1a2e !important; border-color: #2d2d44; }
+        body.dark-mode .admin-sidebar { background: #0d0d1a; }
+        body.dark-mode .modal-content { background: #1a1a2e; color: #e4e4e4; }
+        body.dark-mode .dropdown-menu { background: #1a1a2e; border-color: #2d2d44; }
+        body.dark-mode .dropdown-item { color: #e4e4e4; }
+        body.dark-mode .dropdown-item:hover { background: #2d2d44; color: #fff; }
+        body.dark-mode .form-control, body.dark-mode .form-select { background: #0d0d1a; color: #e4e4e4; border-color: #2d2d44; }
+        body.dark-mode .table { color: #e4e4e4; }
+        body.dark-mode .table-striped > tbody > tr:nth-of-type(odd) { background: #1a1a2e; }
+        body.dark-mode .bg-light { background: #1a1a2e !important; }
+        body.dark-mode .text-muted { color: #888 !important; }
+        body.dark-mode .border-bottom { border-color: #2d2d44 !important; }
+        body.dark-mode .toast-custom { background: #1a1a2e; color: #e4e4e4; }
+        body.dark-mode .footer { background: #0a0a15; }
+        body.dark-mode .stat-card { background: #1a1a2e; }
+
+        /* ===== BUTTONS ===== */
+        .btn-primary-custom {
+            background: var(--primary-red);
+            border: none;
+            color: white;
+            padding: 12px 32px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-primary-custom:hover {
+            background: #a01830;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(196, 30, 58, 0.3);
+        }
+        
+        .btn-outline-custom {
+            border: 2px solid var(--primary-red);
+            color: var(--primary-red);
+            padding: 12px 32px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+        .btn-outline-custom:hover {
+            background: var(--primary-red);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-success-custom {
+            background: var(--primary-green);
+            border: none;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-success-custom:hover {
+            background: #005533;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            border-bottom: 3px solid var(--primary-yellow);
+            box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+            padding: 12px 0;
+            background: white !important;
+        }
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.3rem;
+        }
+        .navbar-brand .brand-icon {
+            background: var(--primary-green);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .nav-link {
+            font-weight: 500;
+            padding: 8px 16px !important;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .nav-link:hover { color: var(--primary-red) !important; }
+        .nav-link.active { color: var(--primary-red) !important; font-weight: 600; }
+
+        /* ===== HERO ===== */
+        .hero-section {
+            background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.4)),
+                        url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%232d2d2d"/%3E%3C/svg%3E');
+            background-size: cover;
+            background-position: center;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: linear-gradient(to top, #f8fafc, transparent);
+        }
+        body.dark-mode .hero-section::before {
+            background: linear-gradient(to top, #0d0d1a, transparent);
+        }
+        .hero-content { position: relative; z-index: 2; }
+        .hero-section h1 { font-size: 3.8rem; font-weight: 900; margin-bottom: 16px; }
+        .hero-section h1 span { color: var(--primary-yellow); }
+        .hero-section p { font-size: 1.2rem; opacity: 0.9; max-width: 650px; margin: 0 auto 24px; }
+        
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .hero-badges .badge {
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: var(--card-shadow);
+            background: white;
+        }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+        .card-img-top { height: 220px; object-fit: cover; background: #e9ecef; }
+
+        .stat-card {
+            border: none;
+            border-radius: 12px;
+            padding: 20px;
+            color: white;
+            transition: transform 0.3s ease;
+            cursor: default;
+        }
+        .stat-card:hover { transform: translateY(-3px); }
+        .stat-card .stat-icon { font-size: 28px; opacity: 0.8; }
+        .stat-card .stat-number { font-size: 28px; font-weight: 700; margin: 5px 0; }
+        .stat-card .stat-label { font-size: 13px; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-card.blue { background: linear-gradient(135deg, #4a90d9, #357abd); }
+        .stat-card.green { background: linear-gradient(135deg, #28a745, #1e7e34); }
+        .stat-card.orange { background: linear-gradient(135deg, #ffc107, #e0a800); }
+        .stat-card.red { background: linear-gradient(135deg, #dc3545, #b02a37); }
+        .stat-card.purple { background: linear-gradient(135deg, #6c5ce7, #5a4bd1); }
+
+        /* ===== TOUR CARD ===== */
+        .tour-card .card-img-top {
+            height: 240px;
+            position: relative;
+        }
+        .tour-card .badge-category {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .tour-card .badge-featured {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--primary-yellow);
+            color: #1a1a2e;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+        .tour-card .price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-red);
+        }
+
+        /* ===== ADMIN SIDEBAR ===== */
+        .admin-wrapper { display: flex; min-height: 100vh; }
+        .admin-sidebar {
+            width: 260px;
+            min-height: 100vh;
+            background: var(--sidebar-bg);
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 1000;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+        }
+        .admin-sidebar::-webkit-scrollbar { width: 4px; }
+        .admin-sidebar::-webkit-scrollbar-thumb { background: var(--primary-red); border-radius: 4px; }
+        .sidebar-brand {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .sidebar-brand .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .sidebar-brand h5 { color: white; margin: 0; font-weight: 600; }
+        .sidebar-brand .badge-admin {
+            background: var(--primary-red);
+            color: white;
+            font-size: 10px;
+            padding: 3px 12px;
+            border-radius: 20px;
+        }
+
+        .sidebar-nav { padding: 15px 10px; }
+        .sidebar-nav .nav-section {
+            color: rgba(255,255,255,0.3);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 15px 5px;
+        }
+        .sidebar-nav .nav-link {
+            color: rgba(255,255,255,0.7);
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .sidebar-nav .nav-link:hover { color: white; background: var(--sidebar-hover); }
+        .sidebar-nav .nav-link.active { color: white; background: var(--primary-red); }
+        .sidebar-nav .nav-link i { font-size: 18px; width: 24px; }
+        .sidebar-nav .nav-link .badge-count {
+            margin-left: auto;
+            background: var(--primary-red);
+            color: white;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+        .sidebar-nav .nav-link.logout-link {
+            color: #ff6b6b;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 15px;
+        }
+        .sidebar-nav .nav-link.logout-link:hover { background: rgba(255,0,0,0.1); color: #ff6b6b; }
+
+        .admin-main { margin-left: 260px; flex: 1; padding: 0; min-height: 100vh; }
+        .admin-header {
+            background: white;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+        body.dark-mode .admin-header { background: #1a1a2e; border-color: #2d2d44; }
+
+        .sidebar-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; }
+
+        /* ===== MODAL ===== */
+        .modal-backdrop-custom {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1040;
+        }
+        .modal-custom {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 16px;
+            z-index: 1050;
+            max-width: 700px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 0;
+        }
+        body.dark-mode .modal-custom { background: #1a1a2e; color: #e4e4e4; }
+
+        /* ===== TOAST ===== */
+        .toast-container {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 9999;
+        }
+        .toast-custom {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border-left: 4px solid var(--primary-green);
+            margin-bottom: 10px;
+            animation: slideIn 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 300px;
+        }
+        .toast-custom.error { border-left-color: #dc3545; }
+        .toast-custom.warning { border-left-color: #ffc107; }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* ===== FOOTER ===== */
+        .footer { background: #0d0d1a; color: white; padding: 40px 16px; margin-top: 30px; }
+        .footer a { color: white; opacity: 0.8; text-decoration: none; font-size: 0.9rem; }
+        .footer a:hover { opacity: 1; color: var(--primary-yellow); }
+        .footer .partner-tag {
+            background: rgba(255,255,255,0.08);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+                width: 280px;
+            }
+            .admin-sidebar.show { transform: translateX(0); }
+            .admin-main { margin-left: 0; }
+            .sidebar-toggle { display: block; }
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                background: rgba(0,0,0,0.4);
+                z-index: 999;
+            }
+            .sidebar-overlay.show { display: block; }
+            .hero-section h1 { font-size: 2.5rem; }
+            .hero-section { min-height: 60vh; }
+        }
+
+        @media (max-width: 576px) {
+            .admin-header { padding: 12px 15px; flex-wrap: wrap; gap: 10px; }
+            .hero-section h1 { font-size: 1.8rem; }
+            .stat-card .stat-number { font-size: 20px; }
+            .card-img-top { height: 180px; }
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #aaa; }
+        body.dark-mode ::-webkit-scrollbar-track { background: #1a1a2e; }
+        body.dark-mode ::-webkit-scrollbar-thumb { background: #2d2d44; }
+
+        /* ===== UTILITY ===== */
+        .cursor-pointer { cursor: pointer; }
+        .text-ethiopia-red { color: var(--primary-red); }
+        .text-ethiopia-green { color: var(--primary-green); }
+        .bg-ethiopia-red { background: var(--primary-red); }
+        .bg-ethiopia-green { background: var(--primary-green); }
+        .gap-1 { gap: 4px; }
+        .gap-2 { gap: 8px; }
+        .gap-3 { gap: 12px; }
+        .gap-4 { gap: 16px; }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <!-- ============================================================
+    LOGIN SCREEN
+    ============================================================ -->
+    <div v-if="!isLoggedIn" class="login-screen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(145deg,#0a3a0e,#1f5e28);display:flex;align-items:center;justify-content:center;z-index:9999;padding:16px;">
+        <div class="login-container" style="background:white;border-radius:32px;padding:32px 28px;width:100%;max-width:480px;box-shadow:0 30px 60px rgba(0,0,0,0.35);animation:fadeUp 0.5s ease;max-height:96vh;overflow-y:auto;">
+            <div style="text-align:center;margin-bottom:20px;">
+                <span style="font-size:3rem;">🇪🇹</span>
+                <h2 style="color:#1b5e20;font-weight:800;">Traverse Ethiopia Tour</h2>
+                <p style="color:#6c757d;font-size:0.9rem;">{{ isSignUp ? 'Create your account' : 'Sign in to your account' }}</p>
+            </div>
+
+            <!-- Login Form -->
+            <div v-if="!isSignUp">
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Email</label>
+                    <input v-model="loginForm.email" type="email" class="form-control" placeholder="your@email.com" style="border-radius:12px;padding:12px 16px;">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Password</label>
+                    <input v-model="loginForm.password" type="password" class="form-control" placeholder="Enter your password" style="border-radius:12px;padding:12px 16px;">
+                </div>
+                <button class="btn btn-primary-custom w-100" @click="handleLogin" style="padding:14px;">🔓 Sign In</button>
+                <p class="text-center mt-3">
+                    <span class="text-muted">Don't have an account?</span>
+                    <a href="#" @click.prevent="isSignUp = true" class="fw-semibold text-ethiopia-red">Sign Up</a>
+                </p>
+            </div>
+
+            <!-- Sign Up Form -->
+            <div v-else>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Full Name</label>
+                    <input v-model="registerForm.name" type="text" class="form-control" placeholder="Your full name" style="border-radius:12px;padding:12px 16px;">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Email</label>
+                    <input v-model="registerForm.email" type="email" class="form-control" placeholder="your@email.com" style="border-radius:12px;padding:12px 16px;">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Phone</label>
+                    <input v-model="registerForm.phone" type="tel" class="form-control" placeholder="+251 911 626 671" style="border-radius:12px;padding:12px 16px;">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Password</label>
+                    <input v-model="registerForm.password" type="password" class="form-control" placeholder="Min 6 characters" style="border-radius:12px;padding:12px 16px;">
+                </div>
+                <button class="btn btn-primary-custom w-100" @click="handleRegister" style="padding:14px;">📧 Create Account</button>
+                <p class="text-center mt-3">
+                    <span class="text-muted">Already have an account?</span>
+                    <a href="#" @click.prevent="isSignUp = false" class="fw-semibold text-ethiopia-red">Sign In</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    MAIN APPLICATION
+    ============================================================ -->
+    <div v-else>
+
+        <!-- ===== HEADER / NAVBAR ===== -->
+        <nav class="navbar navbar-expand-lg sticky-top">
+            <div class="container">
+                <a class="navbar-brand" href="#" @click.prevent="navigateTo('home')">
+                    <span class="brand-icon me-2">🇪🇹</span>
+                    <span>Traverse Ethiopia Tour</span>
+                </a>
+                <button class="navbar-toggler" type="button" @click="mobileMenuOpen = !mobileMenuOpen">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" :class="{'show': mobileMenuOpen}">
+                    <ul class="navbar-nav ms-auto">
+                        <!-- Guest Navigation -->
+                        <template v-if="userRole === 'guest'">
+                            <li class="nav-item"><a class="nav-link" :class="{active: currentPage === 'home'}" @click.prevent="navigateTo('home')">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" :class="{active: currentPage === 'tours'}" @click.prevent="navigateTo('tours')">Tours</a></li>
+                            <li class="nav-item"><a class="nav-link" :class="{active: currentPage === 'destinations'}" @click.prevent="navigateTo('destinations')">Destinations</a></li>
+                            <li class="nav-item"><a class="nav-link" :class="{active: currentPage === 'gallery'}" @click.prevent="navigateTo('gallery')">Gallery</a></li>
+                            <li class="nav-item"><a class="nav-link" :class="{active: currentPage === 'about'}" @click.prevent="navigateTo('about')">About</a></li>
+                            <li class="nav-item"><a class="nav-link" :class="{active: currentPage === 'contact'}" @click.prevent="navigateTo('contact')">Contact</a></li>
+                            <li class="nav-item"><a class="nav-link" :class="{active: currentPage === 'dashboard'}" @click.prevent="navigateTo('dashboard')">My Bookings</a></li>
+                            <li class="nav-item"><a class="nav-link" :class="{active: currentPage === 'wishlist'}" @click.prevent="navigateTo('wishlist')"><i class="bi bi-heart"></i></a></li>
+                        </template>
+
+                        <!-- Admin Navigation -->
+                        <template v-if="userRole === 'admin'">
+                            <li class="nav-item"><a class="nav-link" :class="{active: currentPage === 'admin'}" @click.prevent="navigateTo('admin')">📊 Dashboard</a></li>
+                            <li class="nav-item"><a class="nav-link" :class="{active: currentPage === 'admin-tours'}" @click.prevent="navigateTo('admin-tours')">🏔️ Tours</a></li>
+                            <li class="nav-item"><a class="nav-link" :class="{active: currentPage === 'admin-bookings'}" @click.prevent="navigateTo('admin-bookings')">📋 Bookings</a></li>
+                            <li class="nav-item"><a class="nav-link" :class="{active: currentPage === 'admin-payments'}" @click.prevent="navigateTo('admin-payments')">💰 Payments</a></li>
+                        </template>
+
+                        <!-- User Menu -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown">
+                                <span class="avatar-placeholder d-inline-flex align-items-center justify-content-center rounded-circle bg-ethiopia-green text-white me-1" style="width:32px;height:32px;font-weight:bold;">
+                                    {{ userInitial }}
+                                </span>
+                                {{ userName }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li v-if="userRole === 'guest'"><a class="dropdown-item" href="#" @click.prevent="navigateTo('dashboard')">📋 My Bookings</a></li>
+                                <li v-if="userRole === 'guest'"><a class="dropdown-item" href="#" @click.prevent="navigateTo('wishlist')">❤️ Wishlist</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="#" @click.prevent="logout">🚪 Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- ============================================================
+        MAIN CONTENT
+        ============================================================ -->
+        <div id="mainContent" class="main-content" style="padding:0;">
+
+            <!-- ===== HOME PAGE ===== -->
+            <div v-if="currentPage === 'home'">
+                <!-- Hero -->
+                <section class="hero-section">
+                    <div class="container hero-content">
+                        <div class="hero-badges">
+                            <span class="badge"><i class="bi bi-phone me-1"></i> Telebirr: 0911626671</span>
+                            <span class="badge"><i class="bi bi-airplane me-1"></i> Ethiopian Airlines Partner</span>
+                            <span class="badge"><i class="bi bi-wifi me-1"></i> Ethio Telecom Partner</span>
+                        </div>
+                        <h1>Discover the <span>Hidden Wonders</span> of Ethiopia</h1>
+                        <p>From the rock-hewn churches of Lalibela to the tribal cultures of the Omo Valley, we create unforgettable journeys across Ethiopia.</p>
+                        <div class="d-flex gap-3 justify-content-center flex-wrap">
+                            <a href="#" class="btn btn-primary-custom" @click.prevent="navigateTo('tours')">Explore Tours</a>
+                            <a href="#" class="btn btn-outline-light" style="border:2px solid white;border-radius:30px;padding:12px 32px;color:white;font-weight:600;" @click.prevent="navigateTo('contact')">Book Now</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Why Travel With Us -->
+                <section class="py-5" style="background:white;">
+                    <div class="container">
+                        <h2 class="text-center mb-4">Why Travel With Us?</h2>
+                        <div class="row g-4">
+                            <div class="col-md-3 text-center" v-for="reason in reasons" :key="reason.title">
+                                <div class="p-4 rounded-3 h-100" style="background:#f8fafc;">
+                                    <i :class="reason.icon" style="font-size:2.5rem;color:var(--primary-red);"></i>
+                                    <h5 class="mt-3">{{ reason.title }}</h5>
+                                    <p class="text-muted small">{{ reason.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Featured Tours -->
+                <section class="py-5">
+                    <div class="container">
+                        <h2 class="text-center mb-4">Featured Tours</h2>
+                        <div class="row g-4">
+                            <div class="col-md-4" v-for="tour in featuredTours" :key="tour.id">
+                                <div class="card tour-card">
+                                    <div class="card-img-top" :style="{backgroundImage: `url(${tour.image})`, backgroundSize:'cover', backgroundPosition:'center'}">
+                                        <span class="badge-category" style="background:var(--primary-red);color:white;">{{ tour.category }}</span>
+                                        <span class="badge-featured" v-if="tour.featured">⭐ Featured</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ tour.name }}</h5>
+                                        <p class="text-muted small">{{ tour.duration }}</p>
+                                        <p class="card-text text-muted">{{ tour.shortDescription }}</p>
+                                        <div class="d-flex justify-content-between align-items-center mt-3">
+                                            <div>
+                                                <span class="price">${{ tour.price }}</span>
+                                                <span class="text-muted small d-block">per person</span>
+                                            </div>
+                                            <a href="#" class="btn btn-primary-custom btn-sm" @click.prevent="viewTour(tour.id)">View Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <a href="#" class="btn btn-outline-custom" @click.prevent="navigateTo('tours')">View All Tours</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Testimonials -->
+                <section class="py-5" style="background:#f8fafc;">
+                    <div class="container">
+                        <h2 class="text-center mb-4">What Our Travelers Say</h2>
+                        <div class="row g-4">
+                            <div class="col-md-4" v-for="testimonial in testimonials" :key="testimonial.id">
+                                <div class="card p-4 h-100">
+                                    <div class="text-warning mb-2">
+                                        <i class="bi bi-star-fill" v-for="n in testimonial.rating" :key="n"></i>
+                                    </div>
+                                    <p class="fst-italic">"{{ testimonial.comment }}"</p>
+                                    <div class="d-flex align-items-center mt-2">
+                                        <div class="avatar-placeholder d-flex align-items-center justify-content-center rounded-circle bg-ethiopia-green text-white me-3" style="width:40px;height:40px;font-weight:bold;">{{ testimonial.name.charAt(0) }}</div>
+                                        <div>
+                                            <h6 class="mb-0">{{ testimonial.name }}</h6>
+                                            <small class="text-muted">{{ testimonial.tour }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- ===== TOURS PAGE ===== -->
+            <div v-if="currentPage === 'tours'">
+                <div class="container py-5">
+                    <div class="text-center mb-5">
+                        <h1>Our Tours</h1>
+                        <p class="text-muted">Discover Ethiopia with our carefully crafted tours</p>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <select v-model="tourFilters.category" class="form-select">
+                                <option value="">All Categories</option>
+                                <option value="historical">Historical</option>
+                                <option value="cultural">Cultural</option>
+                                <option value="trekking">Trekking</option>
+                                <option value="wildlife">Wildlife</option>
+                                <option value="adventure">Adventure</option>
+                                <option value="city">City Tours</option>
+                                <option value="food">Food & Coffee</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" v-model="tourFilters.search" class="form-control" placeholder="Search tours...">
+                        </div>
+                        <div class="col-md-4">
+                            <select v-model="tourFilters.sort" class="form-select">
+                                <option value="newest">Newest First</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Tours Grid -->
+                    <div class="row g-4">
+                        <div class="col-md-4" v-for="tour in filteredTours" :key="tour.id">
+                            <div class="card tour-card">
+                                <div class="card-img-top" :style="{backgroundImage: `url(${tour.image})`, backgroundSize:'cover', backgroundPosition:'center'}">
+                                    <span class="badge-category" style="background:var(--primary-red);color:white;">{{ tour.category }}</span>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ tour.name }}</h5>
+                                    <p class="text-muted small">{{ tour.duration }}</p>
+                                    <p class="card-text text-muted">{{ tour.shortDescription }}</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <span class="price">${{ tour.price }}</span>
+                                        <a href="#" class="btn btn-primary-custom btn-sm" @click.prevent="viewTour(tour.id)">View Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== TOUR DETAIL ===== -->
+            <div v-if="currentPage === 'tourDetail' && selectedTour">
+                <div class="container py-5">
+                    <div class="row g-4">
+                        <div class="col-lg-8">
+                            <div class="position-relative mb-4">
+                                <img :src="selectedTour.image" :alt="selectedTour.name" class="img-fluid rounded-3 w-100" style="max-height:450px;object-fit:cover;">
+                                <span class="badge bg-primary position-absolute m-3">{{ selectedTour.category }}</span>
+                            </div>
+                            <h1>{{ selectedTour.name }}</h1>
+                            <p class="text-muted"><i class="bi bi-clock me-2"></i> {{ selectedTour.duration }}</p>
+                            
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h5>About This Tour</h5>
+                                    <p>{{ selectedTour.fullDescription }}</p>
+                                </div>
+                            </div>
+
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h5>Itinerary</h5>
+                                    <div class="timeline">
+                                        <div v-for="(item, index) in selectedTour.itinerary" :key="index" class="d-flex mb-3">
+                                            <div class="bg-ethiopia-red text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width:36px;height:36px;font-weight:bold;flex-shrink:0;">{{ item.day }}</div>
+                                            <div>
+                                                <h6>{{ item.title }}</h6>
+                                                <p class="text-muted small">{{ item.description }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5><i class="bi bi-check-circle text-success me-2"></i> Inclusions</h5>
+                                            <ul class="list-unstyled">
+                                                <li v-for="item in selectedTour.inclusions" :key="item"><i class="bi bi-check text-success me-2"></i> {{ item }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5><i class="bi bi-x-circle text-danger me-2"></i> Exclusions</h5>
+                                            <ul class="list-unstyled">
+                                                <li v-for="item in selectedTour.exclusions" :key="item"><i class="bi bi-x text-danger me-2"></i> {{ item }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="card sticky-top" style="top:100px;">
+                                <div class="card-body">
+                                    <h5>Tour Price</h5>
+                                    <div class="mb-3">
+                                        <span class="display-6 fw-bold text-ethiopia-red">${{ selectedTour.price }}</span>
+                                        <span class="text-muted d-block">per person</span>
+                                    </div>
+                                    <a href="#" class="btn btn-primary-custom w-100 py-2" @click.prevent="openBooking(selectedTour.id)">Book Now</a>
+                                    <hr>
+                                    <div class="small text-muted">
+                                        <p><i class="bi bi-shield-check me-1"></i> Secure booking</p>
+                                        <p><i class="bi bi-credit-card me-1"></i> Pay on arrival</p>
+                                        <p><i class="bi bi-chat me-1"></i> 24/7 support</p>
+                                    </div>
+                                    <div class="d-flex gap-2 mt-2">
+                                        <button class="btn btn-outline-secondary btn-sm w-50" @click="addToWishlist(selectedTour.id)"><i class="bi bi-heart"></i> Save</button>
+                                        <button class="btn btn-outline-secondary btn-sm w-50" @click="downloadPDF(selectedTour.id)"><i class="bi bi-file-pdf"></i> PDF</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== DESTINATIONS ===== -->
+            <div v-if="currentPage === 'destinations'">
+                <div class="container py-5">
+                    <h1 class="text-center mb-4">Our Destinations</h1>
+                    <p class="text-center text-muted mb-5">Explore the diverse beauty of Ethiopia</p>
+                    <div class="row g-4">
+                        <div class="col-md-3" v-for="dest in destinations" :key="dest.id">
+                            <div class="card h-100">
+                                <div class="card-img-top" :style="{backgroundImage: `url(${dest.image})`, backgroundSize:'cover', backgroundPosition:'center', height:'180px'}"></div>
+                                <div class="card-body text-center">
+                                    <span class="badge bg-secondary mb-2">{{ dest.region }}</span>
+                                    <h5>{{ dest.name }}</h5>
+                                    <p class="text-muted small">{{ dest.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== GALLERY ===== -->
+            <div v-if="currentPage === 'gallery'">
+                <div class="container py-5">
+                    <h1 class="text-center mb-4">Gallery</h1>
+                    <p class="text-center text-muted mb-5">Explore Ethiopia through our lens</p>
+                    <div class="row g-3">
+                        <div class="col-md-4 col-lg-3" v-for="(img, index) in galleryImages" :key="index">
+                            <div class="card overflow-hidden cursor-pointer" @click="openLightbox(index)">
+                                <img :src="img" :alt="'Gallery ' + (index+1)" class="img-fluid" style="height:200px;object-fit:cover;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== ABOUT ===== -->
+            <div v-if="currentPage === 'about'">
+                <div class="container py-5">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <h1 class="text-center mb-4">About Traverse Ethiopia Tour</h1>
+                            <div class="text-center mb-5">
+                                <span class="bg-ethiopia-green text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width:80px;height:80px;font-size:2.5rem;">🇪🇹</span>
+                                <p class="lead mt-3">Explore Ethiopia's Culture, Nature, History & Adventure</p>
+                            </div>
+
+                            <h5>Our Story</h5>
+                            <p>Traverse Ethiopia Tour is a locally owned Ethiopian tour operator dedicated to providing authentic travel experiences across Ethiopia. We believe in showing travelers the real Ethiopia — not just the famous sites, but the people, cultures, and traditions that make this country so extraordinary.</p>
+
+                            <h5 class="mt-4">What We Offer</h5>
+                            <div class="row g-3 mt-2">
+                                <div class="col-md-4" v-for="specialty in specialties" :key="specialty">
+                                    <div class="card border-0 bg-light p-3 text-center">
+                                        <i :class="specialty.icon" class="fs-2 text-ethiopia-red mb-2"></i>
+                                        <h6>{{ specialty.name }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 p-4 bg-light rounded-3">
+                                <h5>Contact Us</h5>
+                                <p class="mb-1"><i class="bi bi-phone me-2"></i> +251 911 626 671</p>
+                                <p class="mb-1"><i class="bi bi-envelope me-2"></i> travereseethiopia@gmail.com</p>
+                                <p><i class="bi bi-geo-alt me-2"></i> Addis Ababa, Ethiopia</p>
+                                <p><i class="bi bi-phone me-2"></i> Telebirr: 0911626671</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== CONTACT ===== -->
+            <div v-if="currentPage === 'contact'">
+                <div class="container py-5">
+                    <h1 class="text-center mb-4">Contact Us</h1>
+                    <p class="text-center text-muted mb-5">Get in touch with us for any questions or bookings</p>
+                    <div class="row g-5">
+                        <div class="col-lg-6">
+                            <div class="card p-4">
+                                <h5>Send a Message</h5>
+                                <form @submit.prevent="submitContact">
+                                    <div class="mb-3">
+                                        <label class="form-label">Full Name *</label>
+                                        <input v-model="contactForm.name" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Email *</label>
+                                        <input v-model="contactForm.email" type="email" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Phone</label>
+                                        <input v-model="contactForm.phone" class="form-control">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Message *</label>
+                                        <textarea v-model="contactForm.message" class="form-control" rows="5" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary-custom w-100">Send Message</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card p-4">
+                                <h5>Contact Information</h5>
+                                <div class="mt-3">
+                                    <div class="d-flex align-items-start mb-3">
+                                        <i class="bi bi-geo-alt fs-4 text-ethiopia-red me-3"></i>
+                                        <div>
+                                            <h6>Address</h6>
+                                            <p class="text-muted">Addis Ababa, Ethiopia</p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-start mb-3">
+                                        <i class="bi bi-phone fs-4 text-ethiopia-red me-3"></i>
+                                        <div>
+                                            <h6>Phone</h6>
+                                            <p class="text-muted">+251 911 626 671</p>
+                                            <p class="text-muted small">Telebirr: 0911626671</p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-start mb-3">
+                                        <i class="bi bi-envelope fs-4 text-ethiopia-red me-3"></i>
+                                        <div>
+                                            <h6>Email</h6>
+                                            <p class="text-muted">travereseethiopia@gmail.com</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div>
+                                    <h6>Follow Us</h6>
+                                    <div class="d-flex gap-3 mt-2">
+                                        <a href="#" class="text-dark fs-4"><i class="bi bi-facebook"></i></a>
+                                        <a href="#" class="text-dark fs-4"><i class="bi bi-instagram"></i></a>
+                                        <a href="#" class="text-dark fs-4"><i class="bi bi-youtube"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== GUEST DASHBOARD (My Bookings) ===== -->
+            <div v-if="currentPage === 'dashboard' && userRole === 'guest'">
+                <div class="container py-5">
+                    <h2 class="mb-4">My Bookings</h2>
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-3">
+                            <div class="stat-card blue">
+                                <div class="d-flex justify-content-between">
+                                    <span class="stat-label">Total Bookings</span>
+                                    <i class="bi bi-calendar-check stat-icon"></i>
+                                </div>
+                                <div class="stat-number">{{ userBookings.length }}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card green">
+                                <div class="d-flex justify-content-between">
+                                    <span class="stat-label">Upcoming</span>
+                                    <i class="bi bi-check-circle stat-icon"></i>
+                                </div>
+                                <div class="stat-number">{{ upcomingBookings }}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card orange">
+                                <div class="d-flex justify-content-between">
+                                    <span class="stat-label">Pending</span>
+                                    <i class="bi bi-clock stat-icon"></i>
+                                </div>
+                                <div class="stat-number">{{ pendingBookings }}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card purple">
+                                <div class="d-flex justify-content-between">
+                                    <span class="stat-label">Completed</span>
+                                    <i class="bi bi-check2-all stat-icon"></i>
+                                </div>
+                                <div class="stat-number">{{ completedBookings }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div v-if="userBookings.length === 0" class="text-center py-4">
+                                <p class="text-muted">You haven't made any bookings yet.</p>
+                                <a href="#" class="btn btn-primary-custom" @click.prevent="navigateTo('tours')">Browse Tours</a>
+                            </div>
+                            <div v-else class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Booking #</th>
+                                            <th>Tour</th>
+                                            <th>Date</th>
+                                            <th>Travelers</th>
+                                            <th>Total</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="booking in userBookings" :key="booking.id">
+                                            <td><strong>{{ booking.number }}</strong></td>
+                                            <td>{{ booking.tour }}</td>
+                                            <td>{{ booking.date }}</td>
+                                            <td>{{ booking.travelers }}</td>
+                                            <td>${{ booking.total }}</td>
+                                            <td>
+                                                <span class="badge" :class="{
+                                                    'bg-success': booking.status === 'confirmed',
+                                                    'bg-warning': booking.status === 'pending',
+                                                    'bg-danger': booking.status === 'cancelled',
+                                                    'bg-secondary': booking.status === 'completed'
+                                                }">{{ booking.status }}</span>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-danger" v-if="booking.status === 'pending'" @click="cancelBooking(booking.id)">Cancel</button>
+                                                <button class="btn btn-sm btn-success" v-if="booking.status === 'confirmed'" @click="confirmCompletion(booking.id)">✅ Complete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== WISHLIST ===== -->
+            <div v-if="currentPage === 'wishlist' && userRole === 'guest'">
+                <div class="container py-5">
+                    <h2 class="mb-4">❤️ My Wishlist</h2>
+                    <div v-if="wishlistItems.length === 0" class="text-center py-5">
+                        <p class="text-muted">No tours in your wishlist yet.</p>
+                        <a href="#" class="btn btn-primary-custom" @click.prevent="navigateTo('tours')">Browse Tours</a>
+                    </div>
+                    <div class="row g-4" v-else>
+                        <div class="col-md-4" v-for="tour in wishlistTours" :key="tour.id">
+                            <div class="card tour-card">
+                                <div class="card-img-top" :style="{backgroundImage: `url(${tour.image})`, backgroundSize:'cover', backgroundPosition:'center', height:'200px'}"></div>
+                                <div class="card-body">
+                                    <h5>{{ tour.name }}</h5>
+                                    <p class="text-muted small">{{ tour.duration }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="price">${{ tour.price }}</span>
+                                        <button class="btn btn-sm btn-outline-danger" @click="removeFromWishlist(tour.id)"><i class="bi bi-heart-fill"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================
+            ADMIN DASHBOARD
+            ============================================================ -->
+            <div v-if="currentPage === 'admin' && userRole === 'admin'">
+                <!-- Admin Sidebar (hidden on mobile) -->
+                <div class="admin-wrapper">
+                    <div class="sidebar-overlay" :class="{'show': adminSidebarOpen}" @click="adminSidebarOpen = false"></div>
+                    <aside class="admin-sidebar" :class="{'show': adminSidebarOpen}">
+                        <div class="sidebar-brand">
+                            <div class="logo-icon">🇪🇹</div>
+                            <h5>Traverse Ethiopia</h5>
+                            <span class="badge-admin">Admin Panel</span>
+                        </div>
+                        <nav class="sidebar-nav">
+                            <div class="nav-section">Main</div>
+                            <a class="nav-link" :class="{active: adminPage === 'dashboard'}" @click.prevent="adminPage = 'dashboard'">
+                                <i class="bi bi-grid"></i> Dashboard
+                            </a>
+                            <a class="nav-link" :class="{active: adminPage === 'tours'}" @click.prevent="adminPage = 'tours'">
+                                <i class="bi bi-tree"></i> Tours
+                                <span class="badge-count">{{ allTours.length }}</span>
+                            </a>
+                            <a class="nav-link" :class="{active: adminPage === 'bookings'}" @click.prevent="adminPage = 'bookings'">
+                                <i class="bi bi-calendar-check"></i> Bookings
+                                <span class="badge-count">{{ allBookings.length }}</span>
+                            </a>
+                            <a class="nav-link" :class="{active: adminPage === 'payments'}" @click.prevent="adminPage = 'payments'">
+                                <i class="bi bi-credit-card"></i> Payments
+                                <span class="badge-count">{{ pendingPaymentsCount }}</span>
+                            </a>
+                            <div class="nav-section mt-3">Content</div>
+                            <a class="nav-link" :class="{active: adminPage === 'content'}" @click.prevent="adminPage = 'content'">
+                                <i class="bi bi-file-text"></i> Content
+                            </a>
+                            <a class="nav-link" :class="{active: adminPage === 'customers'}" @click.prevent="adminPage = 'customers'">
+                                <i class="bi bi-people"></i> Customers
+                                <span class="badge-count">{{ customers.length }}</span>
+                            </a>
+                            <div class="nav-section mt-3">Settings</div>
+                            <a class="nav-link" :class="{active: adminPage === 'settings'}" @click.prevent="adminPage = 'settings'">
+                                <i class="bi bi-gear"></i> Settings
+                            </a>
+                            <a class="nav-link logout-link" @click.prevent="logout">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </a>
+                        </nav>
+                    </aside>
+
+                    <main class="admin-main">
+                        <div class="admin-header">
+                            <div class="d-flex align-items-center gap-3">
+                                <button class="sidebar-toggle" @click="adminSidebarOpen = !adminSidebarOpen">
+                                    <i class="bi bi-list"></i>
+                                </button>
+                                <h5 class="mb-0">{{ adminPageTitle }}</h5>
+                            </div>
+                            <div class="d-flex align-items-center gap-3">
+                                <span class="text-muted small d-none d-sm-inline">{{ todayDate }}</span>
+                                <span class="bg-ethiopia-green text-white rounded-circle d-flex align-items-center justify-content-center" style="width:36px;height:36px;font-weight:bold;">{{ userInitial }}</span>
+                            </div>
+                        </div>
+
+                        <div class="p-3 p-md-4">
+                            <!-- Admin Dashboard -->
+                            <div v-if="adminPage === 'dashboard'">
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="stat-card blue">
+                                            <div class="d-flex justify-content-between">
+                                                <span class="stat-label">Total Bookings</span>
+                                                <i class="bi bi-calendar-check stat-icon"></i>
+                                            </div>
+                                            <div class="stat-number">{{ adminStats.totalBookings }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="stat-card green">
+                                            <div class="d-flex justify-content-between">
+                                                <span class="stat-label">Revenue</span>
+                                                <i class="bi bi-currency-dollar stat-icon"></i>
+                                            </div>
+                                            <div class="stat-number">${{ adminStats.revenue }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="stat-card orange">
+                                            <div class="d-flex justify-content-between">
+                                                <span class="stat-label">Customers</span>
+                                                <i class="bi bi-people stat-icon"></i>
+                                            </div>
+                                            <div class="stat-number">{{ adminStats.totalCustomers }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="stat-card purple">
+                                            <div class="d-flex justify-content-between">
+                                                <span class="stat-label">Active Tours</span>
+                                                <i class="bi bi-tree stat-icon"></i>
+                                            </div>
+                                            <div class="stat-number">{{ adminStats.activeTours }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Chart -->
+                                <div class="row g-3 mb-4">
+                                    <div class="col-lg-8">
+                                        <div class="card">
+                                            <div class="card-header bg-transparent">
+                                                <h6 class="mb-0">📊 Monthly Bookings</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <canvas id="bookingsChart" height="250"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="card">
+                                            <div class="card-header bg-transparent">
+                                                <h6 class="mb-0">📈 Quick Stats</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between py-2 border-bottom">
+                                                    <span>Pending Bookings</span>
+                                                    <span class="fw-bold text-warning">{{ adminStats.pending }}</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between py-2 border-bottom">
+                                                    <span>Confirmed</span>
+                                                    <span class="fw-bold text-success">{{ adminStats.confirmed }}</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between py-2 border-bottom">
+                                                    <span>Cancelled</span>
+                                                    <span class="fw-bold text-danger">{{ adminStats.cancelled }}</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between py-2">
+                                                    <span>Completed</span>
+                                                    <span class="fw-bold text-secondary">{{ adminStats.completed }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Recent Bookings -->
+                                <div class="card">
+                                    <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+                                        <h6 class="mb-0">📋 Recent Bookings</h6>
+                                        <a href="#" class="btn btn-sm btn-primary-custom" @click.prevent="adminPage = 'bookings'">View All</a>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Booking</th>
+                                                        <th>Customer</th>
+                                                        <th>Tour</th>
+                                                        <th>Amount</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(booking, index) in recentBookings.slice(0,5)" :key="booking.id">
+                                                        <td>{{ index + 1 }}</td>
+                                                        <td><strong>{{ booking.number }}</strong></td>
+                                                        <td>{{ booking.customer }}</td>
+                                                        <td>{{ booking.tour }}</td>
+                                                        <td>${{ booking.total }}</td>
+                                                        <td>
+                                                            <span class="badge" :class="{
+                                                                'bg-success': booking.status === 'confirmed',
+                                                                'bg-warning': booking.status === 'pending',
+                                                                'bg-danger': booking.status === 'cancelled',
+                                                                'bg-secondary': booking.status === 'completed'
+                                                            }">{{ booking.status }}</span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Admin Tours -->
+                            <div v-if="adminPage === 'tours'">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5>🏔️ Tour Management</h5>
+                                    <button class="btn btn-primary-custom btn-sm" @click="openTourModal()">
+                                        <i class="bi bi-plus"></i> Add Tour
+                                    </button>
+                                </div>
+                                <div class="card">
+                                    <div class="card-body p-0">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Name</th>
+                                                        <th>Category</th>
+                                                        <th>Duration</th>
+                                                        <th>Price</th>
+                                                        <th>Status</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(tour, index) in allTours" :key="tour.id">
+                                                        <td>{{ index + 1 }}</td>
+                                                        <td><strong>{{ tour.name }}</strong></td>
+                                                        <td><span class="badge bg-secondary">{{ tour.category }}</span></td>
+                                                        <td>{{ tour.duration }}</td>
+                                                        <td>${{ tour.price }}</td>
+                                                        <td>
+                                                            <span class="badge" :class="tour.active ? 'bg-success' : 'bg-secondary'">
+                                                                {{ tour.active ? 'Active' : 'Inactive' }}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary me-1" @click="openTourModal(tour)"><i class="bi bi-pencil"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger" @click="deleteTour(tour.id)"><i class="bi bi-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Admin Bookings -->
+                            <div v-if="adminPage === 'bookings'">
+                                <h5 class="mb-3">📋 All Bookings</h5>
+                                <div class="card">
+                                    <div class="card-body p-0">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Booking</th>
+                                                        <th>Customer</th>
+                                                        <th>Tour</th>
+                                                        <th>Date</th>
+                                                        <th>Amount</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(booking, index) in allBookings" :key="booking.id">
+                                                        <td>{{ index + 1 }}</td>
+                                                        <td><strong>{{ booking.number }}</strong></td>
+                                                        <td>{{ booking.customer }}</td>
+                                                        <td>{{ booking.tour }}</td>
+                                                        <td>{{ booking.date }}</td>
+                                                        <td>${{ booking.total }}</td>
+                                                        <td>
+                                                            <span class="badge" :class="{
+                                                                'bg-success': booking.status === 'confirmed',
+                                                                'bg-warning': booking.status === 'pending',
+                                                                'bg-danger': booking.status === 'cancelled',
+                                                                'bg-secondary': booking.status === 'completed'
+                                                            }">{{ booking.status }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-success me-1" v-if="booking.status === 'pending'" @click="confirmBooking(booking.id)"><i class="bi bi-check"></i></button>
+                                                            <button class="btn btn-sm btn-danger" v-if="booking.status === 'pending' || booking.status === 'confirmed'" @click="cancelBooking(booking.id)"><i class="bi bi-x"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Admin Payments -->
+                            <div v-if="adminPage === 'payments'">
+                                <h5 class="mb-3">💰 Payment Verification</h5>
+                                <div class="card">
+                                    <div class="card-body p-0">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Booking</th>
+                                                        <th>Customer</th>
+                                                        <th>Amount</th>
+                                                        <th>Method</th>
+                                                        <th>Screenshot</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(payment, index) in pendingPayments" :key="payment.id">
+                                                        <td>{{ index + 1 }}</td>
+                                                        <td><strong>{{ payment.booking }}</strong></td>
+                                                        <td>{{ payment.customer }}</td>
+                                                        <td>${{ payment.amount }}</td>
+                                                        <td><span class="badge bg-info">Telebirr</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary" @click="viewScreenshot(payment)"><i class="bi bi-image"></i></button>
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge bg-warning">Pending</span>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-success me-1" @click="verifyPayment(payment.id)"><i class="bi bi-check"></i></button>
+                                                            <button class="btn btn-sm btn-danger" @click="rejectPayment(payment.id)"><i class="bi bi-x"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Admin Content -->
+                            <div v-if="adminPage === 'content'">
+                                <h5 class="mb-3">📄 Content Management</h5>
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-header"><h6 class="mb-0">Home Page Content</h6></div>
+                                            <div class="card-body">
+                                                <form @submit.prevent="saveContent">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Hero Title</label>
+                                                        <input v-model="content.heroTitle" class="form-control">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Hero Subtitle</label>
+                                                        <textarea v-model="content.heroSubtitle" class="form-control" rows="2"></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary-custom btn-sm">Save Changes</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-header"><h6 class="mb-0">Company Info</h6></div>
+                                            <div class="card-body">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Company Name</label>
+                                                    <input v-model="settings.companyName" class="form-control">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Phone</label>
+                                                    <input v-model="settings.phone" class="form-control">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Email</label>
+                                                    <input v-model="settings.email" class="form-control">
+                                                </div>
+                                                <button class="btn btn-primary-custom btn-sm" @click="saveSettings">Save Settings</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Admin Customers -->
+                            <div v-if="adminPage === 'customers'">
+                                <h5 class="mb-3">👥 Customer Management</h5>
+                                <div class="card">
+                                    <div class="card-body p-0">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Name</th>
+                                                        <th>Email</th>
+                                                        <th>Phone</th>
+                                                        <th>Bookings</th>
+                                                        <th>Joined</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(customer, index) in customers" :key="customer.id">
+                                                        <td>{{ index + 1 }}</td>
+                                                        <td><strong>{{ customer.name }}</strong></td>
+                                                        <td>{{ customer.email }}</td>
+                                                        <td>{{ customer.phone }}</td>
+                                                        <td><span class="badge bg-primary">{{ customer.bookings }}</span></td>
+                                                        <td>{{ customer.joined }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Admin Settings -->
+                            <div v-if="adminPage === 'settings'">
+                                <h5 class="mb-3">⚙️ Settings</h5>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form @submit.prevent="saveAdminSettings">
+                                            <div class="mb-3">
+                                                <label class="form-label">Admin Name</label>
+                                                <input v-model="adminSettings.name" class="form-control">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Admin Email</label>
+                                                <input v-model="adminSettings.email" class="form-control">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">New Password</label>
+                                                <input v-model="adminSettings.password" type="password" class="form-control" placeholder="Leave blank to keep current">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary-custom">Update Admin</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================================
+        FOOTER
+        ============================================================ -->
+        <footer class="footer" v-if="currentPage !== 'admin' && currentPage !== 'admin-tours' && currentPage !== 'admin-bookings' && currentPage !== 'admin-payments'">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <h5>🇪🇹 Traverse Ethiopia Tour</h5>
+                        <p class="text-muted">Explore Ethiopia's culture, nature, history & adventure with us.</p>
+                        <div class="d-flex gap-3 mt-3">
+                            <a href="#" class="text-white fs-5"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="text-white fs-5"><i class="bi bi-instagram"></i></a>
+                            <a href="#" class="text-white fs-5"><i class="bi bi-youtube"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <h6>Quick Links</h6>
+                        <ul class="list-unstyled">
+                            <li><a href="#" @click.prevent="navigateTo('tours')">Tours</a></li>
+                            <li><a href="#" @click.prevent="navigateTo('destinations')">Destinations</a></li>
+                            <li><a href="#" @click.prevent="navigateTo('gallery')">Gallery</a></li>
+                            <li><a href="#" @click.prevent="navigateTo('about')">About</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h6>Contact</h6>
+                        <ul class="list-unstyled text-muted">
+                            <li><i class="bi bi-phone me-2"></i> +251 911 626 671</li>
+                            <li><i class="bi bi-envelope me-2"></i> travereseethiopia@gmail.com</li>
+                            <li><i class="bi bi-geo-alt me-2"></i> Addis Ababa, Ethiopia</li>
+                            <li><i class="bi bi-phone me-2"></i> Telebirr: 0911626671</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h6>Payment Methods</h6>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <span class="partner-tag">Telebirr</span>
+                            <span class="partner-tag">CBE Birr</span>
+                            <span class="partner-tag">Pay on Arrival</span>
+                        </div>
+                        <p class="text-muted mt-2 small"><i class="bi bi-phone me-1"></i> 0911626671</p>
+                    </div>
+                </div>
+                <hr class="border-secondary">
+                <p class="text-center text-muted small">&copy; 2024 Traverse Ethiopia Tour. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <!-- ============================================================
+        BOOKING MODAL
+        ============================================================ -->
+        <div v-if="bookingModalOpen" class="modal-backdrop-custom" @click="bookingModalOpen = false"></div>
+        <div v-if="bookingModalOpen" class="modal-custom">
+            <div class="modal-header p-4 border-bottom d-flex justify-content-between align-items-center">
+                <h5 class="modal-title">Book Your Tour</h5>
+                <button class="btn-close" @click="bookingModalOpen = false"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="bg-light p-3 rounded-3 mb-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h6>{{ bookingTour?.name || 'Tour' }}</h6>
+                            <p class="text-muted small mb-0">{{ bookingTour?.duration || '' }}</p>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <span class="fw-bold text-ethiopia-red fs-5">${{ bookingTour?.price || 0 }}</span>
+                            <span class="text-muted small d-block">per person</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h6 class="mb-3">Customer Information</h6>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Full Name *</label>
+                        <input v-model="bookingForm.name" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Email *</label>
+                        <input v-model="bookingForm.email" type="email" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Phone *</label>
+                        <input v-model="bookingForm.phone" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Nationality</label>
+                        <input v-model="bookingForm.nationality" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Age *</label>
+                        <input v-model.number="bookingForm.age" type="number" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Sex *</label>
+                        <select v-model="bookingForm.sex" class="form-select">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Passport *</label>
+                        <input v-model="bookingForm.passport" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Travel Date *</label>
+                        <input v-model="bookingForm.date" type="date" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Travelers *</label>
+                        <input v-model.number="bookingForm.travelers" type="number" min="1" max="20" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Infants (Free)</label>
+                        <input v-model.number="bookingForm.infants" type="number" min="0" max="10" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Payment Method *</label>
+                        <select v-model="bookingForm.paymentMethod" class="form-select">
+                            <option value="telebirr">📱 Telebirr</option>
+                            <option value="cash">💵 Cash on Arrival</option>
+                            <option value="card">💳 Credit Card</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Special Requests</label>
+                        <textarea v-model="bookingForm.requests" class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+
+                <div class="mt-4 p-3 bg-light rounded-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fw-bold">Total Price:</span>
+                        <span class="fs-4 fw-bold text-ethiopia-red">${{ calculateTotal() }}</span>
+                    </div>
+                    <small class="text-muted">* {{ bookingForm.infants || 0 }} infants free</small>
+                </div>
+
+                <div v-if="bookingForm.paymentMethod === 'telebirr'" class="mt-3 p-3 bg-light rounded-3">
+                    <h6>📱 Pay with Telebirr</h6>
+                    <p>Send payment to: <strong class="text-ethiopia-red">0911626671</strong></p>
+                    <p class="text-muted small">After payment, upload the screenshot below.</p>
+                    <div class="file-upload p-3 border-2 rounded-3 text-center" style="border:2px dashed #dee2e6;cursor:pointer;">
+                        <i class="bi bi-cloud-upload fs-2 d-block"></i>
+                        <span>Upload Screenshot</span>
+                        <input type="file" accept="image/*" @change="handleScreenshotUpload" style="display:none;">
+                    </div>
+                    <div v-if="bookingForm.screenshot" class="mt-2">
+                        <img :src="bookingForm.screenshot" style="max-width:100px;max-height:100px;border-radius:8px;">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer p-4 border-top">
+                <button class="btn btn-secondary" @click="bookingModalOpen = false">Cancel</button>
+                <button class="btn btn-primary-custom" @click="submitBooking">Confirm Booking</button>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        TOAST NOTIFICATIONS
+        ============================================================ -->
+        <div class="toast-container">
+            <div v-for="(toast, index) in toasts" :key="index" class="toast-custom" :class="toast.type">
+                <i :class="toast.icon"></i>
+                <div>
+                    <div class="fw-semibold">{{ toast.title }}</div>
+                    <div class="small text-muted">{{ toast.message }}</div>
+                </div>
+                <button class="btn btn-sm btn-link text-muted ms-auto" @click="removeToast(index)">×</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ============================================================
+VUE 3
+============================================================ -->
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+const { createApp, ref, computed, watch, onMounted } = Vue;
+
+const app = createApp({
+    setup() {
+        // ===== STATE =====
+        const isLoggedIn = ref(false);
+        const isSignUp = ref(false);
+        const currentPage = ref('home');
+        const mobileMenuOpen = ref(false);
+        const adminSidebarOpen = ref(false);
+        const adminPage = ref('dashboard');
+        const bookingModalOpen = ref(false);
+        const bookingTour = ref(null);
+        const lightboxOpen = ref(false);
+        const lightboxIndex = ref(0);
+
+        // ===== USER =====
+        const user = ref({
+            id: 1,
+            name: 'Guest User',
+            email: 'guest@email.com',
+            role: 'guest'
+        });
+
+        const userRole = computed(() => user.value?.role || 'guest');
+        const userName = computed(() => user.value?.name || 'User');
+        const userInitial = computed(() => user.value?.name?.charAt(0)?.toUpperCase() || 'U');
+        const todayDate = computed(() => new Date().toLocaleDateString('en-US', { 
+            weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' 
+        }));
+
+        // ===== FORMS =====
+        const loginForm = ref({ email: '', password: '' });
+        const registerForm = ref({ name: '', email: '', phone: '', password: '' });
+        const contactForm = ref({ name: '', email: '', phone: '', message: '' });
+        const bookingForm = ref({
+            name: '', email: '', phone: '', nationality: '',
+            age: 25, sex: 'Male', passport: '',
+            date: '', travelers: 1, infants: 0,
+            paymentMethod: 'telebirr', requests: '', screenshot: null
+        });
+
+        // ===== TOASTS =====
+        const toasts = ref([]);
+        function showToast(title, message, type = 'success') {
+            const icons = {
+                success: 'bi bi-check-circle text-success',
+                error: 'bi bi-x-circle text-danger',
+                warning: 'bi bi-exclamation-triangle text-warning'
+            };
+            toasts.value.push({ title, message, type, icon: icons[type] || icons.success });
+            setTimeout(() => { toasts.value.shift(); }, 4000);
+        }
+        function removeToast(index) { toasts.value.splice(index, 1); }
+
+        // ===== NAVIGATION =====
+        function navigateTo(page) {
+            currentPage.value = page;
+            mobileMenuOpen.value = false;
+            adminSidebarOpen.value = false;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ===== AUTH =====
+        function handleLogin() {
+            // Demo login - check for admin
+            if (loginForm.value.email === 'admin@traverse.com' && loginForm.value.password === 'admin123') {
+                user.value = { id: 1, name: 'Admin User', email: 'admin@traverse.com', role: 'admin' };
+                isLoggedIn.value = true;
+                showToast('Welcome Admin!', 'You are logged in as administrator.');
+                navigateTo('admin');
+            } else {
+                user.value = { id: 2, name: loginForm.value.email.split('@')[0] || 'Guest', email: loginForm.value.email, role: 'guest' };
+                isLoggedIn.value = true;
+                showToast('Welcome!', 'You are logged in as ' + user.value.name);
+                navigateTo('home');
+            }
+            loginForm.value = { email: '', password: '' };
+        }
+
+        function handleRegister() {
+            user.value = { id: 2, name: registerForm.value.name, email: registerForm.value.email, role: 'guest' };
+            isLoggedIn.value = true;
+            showToast('Account Created!', 'Welcome to Traverse Ethiopia Tour.');
+            registerForm.value = { name: '', email: '', phone: '', password: '' };
+            navigateTo('home');
+        }
+
+        function logout() {
+            isLoggedIn.value = false;
+            user.value = null;
+            showToast('Logged Out', 'See you next time!');
+            navigateTo('home');
+        }
+
+        // ===== DATA =====
+        const reasons = [
+            { icon: 'bi bi-people-fill', title: 'Experienced Local Guides', description: 'Knowledgeable guides with deep understanding of Ethiopian history and culture.' },
+            { icon: 'bi bi-geo-alt-fill', title: 'Custom Tour Packages', description: 'Private, group, family, business, and adventure tours across Ethiopia.' },
+            { icon: 'bi bi-truck', title: 'Safe & Reliable Transportation', description: 'Modern vehicles and professional drivers for your safety.' },
+            { icon: 'bi bi-headset', title: '24/7 Customer Support', description: 'Support before, during, and after your trip.' }
+        ];
+
+        const allTours = ref([
+            { 
+                id: 1, 
+                name: 'Historical Ethiopia Tour', 
+                category: 'historical', 
+                duration: '7 Days', 
+                price: 1500, 
+                shortDescription: 'Explore Lalibela, Gondar, Bahir Dar and Axum',
+                fullDescription: 'Visit the rock-hewn churches of Lalibela, the castles of Gondar, the monasteries of Bahir Dar, and the ancient obelisks of Axum.',
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23c41e3a"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="14"%3ELalibela%3C/text%3E%3C/svg%3E',
+                featured: true,
+                active: true,
+                inclusions: ['Hotels (4-star)', 'Domestic flights', 'Transportation', 'Guide services', 'Meals'],
+                exclusions: ['International flights', 'Travel insurance', 'Personal expenses', 'Tips'],
+                itinerary: [
+                    { day: 1, title: 'Arrival in Addis Ababa', description: 'Welcome and transfer to hotel.' },
+                    { day: 2, title: 'Fly to Lalibela', description: 'Visit the famous rock-hewn churches.' },
+                    { day: 3, title: 'Lalibela to Gondar', description: 'Explore the castles of Gondar.' },
+                    { day: 4, title: 'Gondar to Bahir Dar', description: 'Visit Lake Tana monasteries.' },
+                    { day: 5, title: 'Bahir Dar to Axum', description: 'Visit the ancient obelisks.' },
+                    { day: 6, title: 'Axum to Addis Ababa', description: 'Return to Addis Ababa.' },
+                    { day: 7, title: 'Departure', description: 'Transfer to airport.' }
+                ]
+            },
+            { 
+                id: 2, 
+                name: 'Omo Valley Cultural Tour', 
+                category: 'cultural', 
+                duration: '6 Days', 
+                price: 1800, 
+                shortDescription: 'Visit Hamer, Mursi, Karo and Dassanech tribes',
+                fullDescription: 'Discover the rich tribal cultures of the Omo Valley. Visit the Hamer, Mursi, Karo, and Dassanech tribes.',
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23006b3f"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="14"%3EOmo Valley%3C/text%3E%3C/svg%3E',
+                featured: true,
+                active: true,
+                inclusions: ['Hotels', 'Transportation', 'Guide services', 'Meals', 'Tribal visits'],
+                exclusions: ['International flights', 'Insurance', 'Personal expenses'],
+                itinerary: [
+                    { day: 1, title: 'Arrival in Addis Ababa', description: 'Transfer to hotel.' },
+                    { day: 2, title: 'Fly to Jinka', description: 'Visit the Hamer tribe.' },
+                    { day: 3, title: 'Mursi Tribe', description: 'Visit the Mursi people.' },
+                    { day: 4, title: 'Karo Tribe', description: 'Visit the Karo people.' },
+                    { day: 5, title: 'Dassanech Tribe', description: 'Visit the Dassanech people.' },
+                    { day: 6, title: 'Return to Addis Ababa', description: 'Fly back.' }
+                ]
+            },
+            { 
+                id: 3, 
+                name: 'Simien Mountains Trek', 
+                category: 'trekking', 
+                duration: '5 Days', 
+                price: 950, 
+                shortDescription: 'Trek through breathtaking mountain scenery',
+                fullDescription: 'Trek through the stunning Simien Mountains with breathtaking views and wildlife.',
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23fcdd09"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="black" font-size="14"%3ESimien%3C/text%3E%3C/svg%3E',
+                featured: false,
+                active: true,
+                inclusions: ['Camping', 'Guide', 'Scout', 'Meals'],
+                exclusions: ['International flights', 'Insurance', 'Personal gear'],
+                itinerary: [
+                    { day: 1, title: 'Drive to Simien Mountains', description: 'Start trekking.' },
+                    { day: 2, title: 'Trek to Sankaber', description: 'Trek through the mountains.' },
+                    { day: 3, title: 'Trek to Geech', description: 'Continue trekking.' },
+                    { day: 4, title: 'Trek to Chenek', description: 'Trek to the final camp.' },
+                    { day: 5, title: 'Return to Gondar', description: 'Drive back.' }
+                ]
+            }
+        ]);
+
+        const featuredTours = computed(() => allTours.value.filter(t => t.featured));
+        const tourFilters = ref({ category: '', search: '', sort: 'newest' });
+        const filteredTours = computed(() => {
+            let result = allTours.value;
+            if (tourFilters.value.category) {
+                result = result.filter(t => t.category === tourFilters.value.category);
+            }
+            if (tourFilters.value.search) {
+                const q = tourFilters.value.search.toLowerCase();
+                result = result.filter(t => t.name.toLowerCase().includes(q) || t.category.includes(q));
+            }
+            if (tourFilters.value.sort === 'price-low') {
+                result = [...result].sort((a, b) => a.price - b.price);
+            } else if (tourFilters.value.sort === 'price-high') {
+                result = [...result].sort((a, b) => b.price - a.price);
+            }
+            return result;
+        });
+
+        const selectedTour = ref(null);
+        function viewTour(id) {
+            const tour = allTours.value.find(t => t.id === id);
+            if (tour) {
+                selectedTour.value = tour;
+                currentPage.value = 'tourDetail';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // ===== DESTINATIONS =====
+        const destinations = ref([
+            { id: 1, name: 'Lalibela', region: 'Northern', description: 'Ancient rock-hewn churches', image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23c41e3a"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="12"%3ELalibela%3C/text%3E%3C/svg%3E' },
+            { id: 2, name: 'Simien Mountains', region: 'Northern', description: 'Trekking and wildlife', image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23006b3f"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="12"%3ESimien%3C/text%3E%3C/svg%3E' },
+            { id: 3, name: 'Omo Valley', region: 'Southern', description: 'Unique tribal cultures', image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23fcdd09"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="black" font-size="12"%3EOmo%3C/text%3E%3C/svg%3E' },
+            { id: 4, name: 'Danakil Depression', region: 'Afar', description: 'Extraordinary landscapes', image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23c41e3a"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="12"%3EDanakil%3C/text%3E%3C/svg%3E' },
+            { id: 5, name: 'Gondar', region: 'Northern', description: 'Castles and churches', image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23006b3f"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="12"%3EGondar%3C/text%3E%3C/svg%3E' },
+            { id: 6, name: 'Axum', region: 'Northern', description: 'Ancient civilization', image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23fcdd09"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="black" font-size="12"%3EAxum%3C/text%3E%3C/svg%3E' }
+        ]);
+
+        const galleryImages = [
+            'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"%3E%3Crect width="200" height="200" fill="%23c41e3a"/%3E%3Ctext x="100" y="105" text-anchor="middle" fill="white" font-size="16"%3ELalibela%3C/text%3E%3C/svg%3E',
+            'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"%3E%3Crect width="200" height="200" fill="%23006b3f"/%3E%3Ctext x="100" y="105" text-anchor="middle" fill="white" font-size="16"%3ESimien%3C/text%3E%3C/svg%3E',
+            'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"%3E%3Crect width="200" height="200" fill="%23fcdd09"/%3E%3Ctext x="100" y="105" text-anchor="middle" fill="black" font-size="16"%3EOmo%3C/text%3E%3C/svg%3E',
+            'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"%3E%3Crect width="200" height="200" fill="%23c41e3a"/%3E%3Ctext x="100" y="105" text-anchor="middle" fill="white" font-size="16"%3EDanakil%3C/text%3E%3C/svg%3E',
+            'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"%3E%3Crect width="200" height="200" fill="%23006b3f"/%3E%3Ctext x="100" y="105" text-anchor="middle" fill="white" font-size="16"%3EGondar%3C/text%3E%3C/svg%3E',
+            'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"%3E%3Crect width="200" height="200" fill="%23fcdd09"/%3E%3Ctext x="100" y="105" text-anchor="middle" fill="black" font-size="16"%3EAxum%3C/text%3E%3C/svg%3E'
+        ];
+
+        const testimonials = [
+            { id: 1, name: 'Sarah Johnson', rating: 5, comment: 'An amazing experience. Professional guides and excellent service.', tour: 'Historical Ethiopia Tour' },
+            { id: 2, name: 'Michael Chen', rating: 5, comment: 'The best way to discover Ethiopia. Highly recommend!', tour: 'Omo Valley Cultural Tour' },
+            { id: 3, name: 'Emma Williams', rating: 4, comment: 'Unforgettable trip to the Simien Mountains. The views were incredible.', tour: 'Simien Mountains Trek' }
+        ];
+
+        const specialties = [
+            { name: 'Cultural Tours', icon: 'bi bi-people' },
+            { name: 'Historical Tours', icon: 'bi bi-building' },
+            { name: 'Wildlife Safaris', icon: 'bi bi-tree' },
+            { name: 'Adventure Tours', icon: 'bi bi-activity' },
+            { name: 'Photography Tours', icon: 'bi bi-camera' },
+            { name: 'Business Travel', icon: 'bi bi-briefcase' }
+        ];
+
+        // ===== WISHLIST =====
+        const wishlistItems = ref([]);
+        const wishlistTours = computed(() => allTours.value.filter(t => wishlistItems.value.includes(t.id)));
+
+        function addToWishlist(tourId) {
+            if (!wishlistItems.value.includes(tourId)) {
+                wishlistItems.value.push(tourId);
+                showToast('Added to Wishlist', 'Tour saved to your wishlist.');
+            } else {
+                showToast('Already in Wishlist', 'This tour is already in your wishlist.', 'warning');
+            }
+        }
+
+        function removeFromWishlist(tourId) {
+            wishlistItems.value = wishlistItems.value.filter(id => id !== tourId);
+            showToast('Removed from Wishlist', 'Tour removed from your wishlist.');
+        }
+
+        // ===== BOOKINGS =====
+        const userBookings = ref([
+            { id: 1, number: 'ET20241201', tour: 'Historical Ethiopia Tour', date: '2025-01-15', travelers: 2, total: 3000, status: 'confirmed' },
+            { id: 2, number: 'ET20241202', tour: 'Omo Valley Cultural Tour', date: '2025-02-01', travelers: 1, total: 1800, status: 'pending' },
+            { id: 3, number: 'ET20241203', tour: 'Simien Mountains Trek', date: '2025-01-20', travelers: 2, total: 1900, status: 'completed' }
+        ]);
+
+        const allBookings = ref([
+            { id: 1, number: 'ET20241201', customer: 'Sarah Johnson', tour: 'Historical Ethiopia Tour', date: '2025-01-15', total: 3000, status: 'confirmed' },
+            { id: 2, number: 'ET20241202', customer: 'Michael Chen', tour: 'Omo Valley Cultural Tour', date: '2025-02-01', total: 1800, status: 'pending' },
+            { id: 3, number: 'ET20241203', customer: 'Emma Williams', tour: 'Simien Mountains Trek', date: '2025-01-20', total: 1900, status: 'completed' },
+            { id: 4, number: 'ET20241204', customer: 'David Kim', tour: 'Historical Ethiopia Tour', date: '2025-02-10', total: 3000, status: 'pending' },
+            { id: 5, number: 'ET20241205', customer: 'Lisa Anderson', tour: 'Omo Valley Cultural Tour', date: '2025-01-25', total: 1800, status: 'cancelled' }
+        ]);
+
+        const recentBookings = computed(() => allBookings.value);
+        const upcomingBookings = computed(() => userBookings.value.filter(b => b.status === 'confirmed').length);
+        const pendingBookings = computed(() => userBookings.value.filter(b => b.status === 'pending').length);
+        const completedBookings = computed(() => userBookings.value.filter(b => b.status === 'completed').length);
+
+        const pendingPayments = ref([
+            { id: 1, booking: 'ET20241202', customer: 'Michael Chen', amount: 1800, screenshot: null },
+            { id: 2, booking: 'ET20241204', customer: 'David Kim', amount: 3000, screenshot: null }
+        ]);
+        const pendingPaymentsCount = computed(() => pendingPayments.value.length);
+
+        function cancelBooking(id) {
+            const booking = userBookings.value.find(b => b.id === id);
+            if (booking) {
+                booking.status = 'cancelled';
+                showToast('Booking Cancelled', 'Your booking has been cancelled.');
+            }
+        }
+
+        function confirmCompletion(id) {
+            const booking = userBookings.value.find(b => b.id === id);
+            if (booking) {
+                booking.status = 'completed';
+                showToast('Tour Completed', 'Thank you for completing the tour!');
+            }
+        }
+
+        function confirmBooking(id) {
+            const booking = allBookings.value.find(b => b.id === id);
+            if (booking) {
+                booking.status = 'confirmed';
+                showToast('Booking Confirmed', `Booking ${booking.number} has been confirmed.`);
+            }
+        }
+
+        function verifyPayment(id) {
+            const payment = pendingPayments.value.find(p => p.id === id);
+            if (payment) {
+                pendingPayments.value = pendingPayments.value.filter(p => p.id !== id);
+                showToast('Payment Verified', `Payment for ${payment.booking} has been verified.`);
+            }
+        }
+
+        function rejectPayment(id) {
+            const payment = pendingPayments.value.find(p => p.id === id);
+            if (payment) {
+                pendingPayments.value = pendingPayments.value.filter(p => p.id !== id);
+                showToast('Payment Rejected', `Payment for ${payment.booking} has been rejected.`);
+            }
+        }
+
+        function viewScreenshot(payment) {
+            showToast('Screenshot', 'Payment screenshot viewed.', 'warning');
+        }
+
+        // ===== BOOKING MODAL =====
+        function openBooking(tourId) {
+            const tour = allTours.value.find(t => t.id === tourId);
+            if (tour) {
+                bookingTour.value = tour;
+                bookingForm.value = {
+                    name: '', email: '', phone: '', nationality: '',
+                    age: 25, sex: 'Male', passport: '',
+                    date: new Date().toISOString().split('T')[0],
+                    travelers: 1, infants: 0,
+                    paymentMethod: 'telebirr', requests: '', screenshot: null
+                };
+                bookingModalOpen.value = true;
+            }
+        }
+
+        function calculateTotal() {
+            const price = bookingTour.value?.price || 0;
+            const travelers = bookingForm.value.travelers || 1;
+            return price * travelers;
+        }
+
+        function handleScreenshotUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    bookingForm.value.screenshot = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function submitBooking() {
+            const total = calculateTotal();
+            const newBooking = {
+                id: userBookings.value.length + 1,
+                number: 'ET' + new Date().getTime().toString().slice(-6),
+                tour: bookingTour.value?.name || 'Tour',
+                date: bookingForm.value.date,
+                travelers: bookingForm.value.travelers,
+                total: total,
+                status: 'pending'
+            };
+            userBookings.value.push(newBooking);
+            allBookings.value.push({
+                id: allBookings.value.length + 1,
+                number: newBooking.number,
+                customer: bookingForm.value.name,
+                tour: bookingTour.value?.name || 'Tour',
+                date: bookingForm.value.date,
+                total: total,
+                status: 'pending'
+            });
+            bookingModalOpen.value = false;
+            showToast('Booking Confirmed!', `Your booking #${newBooking.number} has been created. Total: $${total}`);
+            navigateTo('dashboard');
+        }
+
+        // ===== ADMIN STATS =====
+        const adminStats = ref({
+            totalBookings: allBookings.value.length,
+            revenue: '45,200',
+            totalCustomers: 28,
+            activeTours: allTours.value.filter(t => t.active).length,
+            pending: allBookings.value.filter(b => b.status === 'pending').length,
+            confirmed: allBookings.value.filter(b => b.status === 'confirmed').length,
+            cancelled: allBookings.value.filter(b => b.status === 'cancelled').length,
+            completed: allBookings.value.filter(b => b.status === 'completed').length
+        });
+
+        const adminPageTitle = computed(() => {
+            const titles = {
+                dashboard: '📊 Dashboard',
+                tours: '🏔️ Tour Management',
+                bookings: '📋 Booking Management',
+                payments: '💰 Payment Verification',
+                content: '📄 Content Management',
+                customers: '👥 Customer Management',
+                settings: '⚙️ Settings'
+            };
+            return titles[adminPage.value] || 'Dashboard';
+        });
+
+        // ===== CUSTOMERS =====
+        const customers = ref([
+            { id: 1, name: 'Sarah Johnson', email: 'sarah@email.com', phone: '+251 911 123 456', bookings: 3, joined: '2024-01-15' },
+            { id: 2, name: 'Michael Chen', email: 'michael@email.com', phone: '+251 912 345 678', bookings: 2, joined: '2024-02-01' },
+            { id: 3, name: 'Emma Williams', email: 'emma@email.com', phone: '+251 913 456 789', bookings: 4, joined: '2024-03-01' },
+            { id: 4, name: 'David Kim', email: 'david@email.com', phone: '+251 914 567 890', bookings: 1, joined: '2024-03-15' },
+            { id: 5, name: 'Lisa Anderson', email: 'lisa@email.com', phone: '+251 915 678 901', bookings: 2, joined: '2024-04-01' }
+        ]);
+
+        // ===== CONTENT =====
+        const content = ref({
+            heroTitle: 'Discover the Hidden Wonders of Ethiopia',
+            heroSubtitle: 'From rock-hewn churches to tribal cultures, we create unforgettable journeys.'
+        });
+
+        const settings = ref({
+            companyName: 'Traverse Ethiopia Tour',
+            phone: '+251 911 626 671',
+            email: 'travereseethiopia@gmail.com'
+        });
+
+        const adminSettings = ref({
+            name: 'Admin User',
+            email: 'admin@traverse.com',
+            password: ''
+        });
+
+        function saveContent() {
+            showToast('Content Saved', 'Home page content updated successfully.');
+        }
+
+        function saveSettings() {
+            showToast('Settings Saved', 'Company settings updated successfully.');
+        }
+
+        function saveAdminSettings() {
+            showToast('Admin Updated', 'Admin settings updated successfully.');
+        }
+
+        // ===== TOUR MANAGEMENT =====
+        const tourModalOpen = ref(false);
+        const editingTour = ref(null);
+        const tourForm = ref({
+            name: '', category: 'historical', duration: '', price: 0,
+            shortDescription: '', fullDescription: '', image: '',
+            featured: false, active: true,
+            inclusions: [], exclusions: [], itinerary: []
+        });
+
+        function openTourModal(tour = null) {
+            editingTour.value = tour;
+            if (tour) {
+                tourForm.value = { ...tour };
+            } else {
+                tourForm.value = {
+                    name: '', category: 'historical', duration: '', price: 0,
+                    shortDescription: '', fullDescription: '', image: '',
+                    featured: false, active: true,
+                    inclusions: [], exclusions: [], itinerary: []
+                };
+            }
+            tourModalOpen.value = true;
+        }
+
+        function saveTour() {
+            if (editingTour.value) {
+                const index = allTours.value.findIndex(t => t.id === editingTour.value.id);
+                if (index !== -1) {
+                    allTours.value[index] = { ...tourForm.value, id: editingTour.value.id };
+                }
+                showToast('Tour Updated', `"${tourForm.value.name}" has been updated.`);
+            } else {
+                const newId = allTours.value.length + 1;
+                allTours.value.push({ ...tourForm.value, id: newId });
+                showToast('Tour Added', `"${tourForm.value.name}" has been added.`);
+            }
+            tourModalOpen.value = false;
+            // Update stats
+            adminStats.value.activeTours = allTours.value.filter(t => t.active).length;
+        }
+
+        function deleteTour(id) {
+            if (confirm('Are you sure you want to delete this tour?')) {
+                allTours.value = allTours.value.filter(t => t.id !== id);
+                showToast('Tour Deleted', 'Tour has been removed.', 'warning');
+            }
+        }
+
+        // ===== CONTACT =====
+        function submitContact() {
+            showToast('Message Sent!', 'We will get back to you shortly.');
+            contactForm.value = { name: '', email: '', phone: '', message: '' };
+        }
+
+        // ===== LIGHTBOX =====
+        function openLightbox(index) {
+            lightboxIndex.value = index;
+            lightboxOpen.value = true;
+        }
+
+        // ===== CHART =====
+        let chartInstance = null;
+        function initChart() {
+            const canvas = document.getElementById('bookingsChart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            if (chartInstance) { chartInstance.destroy(); }
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['August', 'September', 'October', 'November', 'December', 'January'],
+                    datasets: [{
+                        label: 'Bookings',
+                        data: [45, 52, 38, 65, 48, 72],
+                        borderColor: '#c41e3a',
+                        backgroundColor: 'rgba(196,30,58,0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 3
+                    }, {
+                        label: 'Revenue ($)',
+                        data: [12000, 14500, 10800, 18500, 13200, 21000],
+                        borderColor: '#006b3f',
+                        backgroundColor: 'rgba(0,107,63,0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top', labels: { usePointStyle: true } } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        // ===== WATCH =====
+        watch(currentPage, (newPage) => {
+            if (newPage === 'admin' && adminPage.value === 'dashboard') {
+                setTimeout(initChart, 300);
+            }
+        });
+
+        // ===== MOUNTED =====
+        onMounted(() => {
+            // Auto-login as guest for demo
+            // user.value = { id: 2, name: 'Guest User', email: 'guest@email.com', role: 'guest' };
+            // isLoggedIn.value = true;
+        });
+
+        // ===== EXPOSE =====
+        return {
+            isLoggedIn,
+            isSignUp,
+            currentPage,
+            mobileMenuOpen,
+            adminSidebarOpen,
+            adminPage,
+            adminPageTitle,
+            bookingModalOpen,
+            bookingTour,
+            bookingForm,
+            lightboxOpen,
+            lightboxIndex,
+            user,
+            userRole,
+            userName,
+            userInitial,
+            todayDate,
+            loginForm,
+            registerForm,
+            contactForm,
+            toasts,
+            reasons,
+            allTours,
+            featuredTours,
+            tourFilters,
+            filteredTours,
+            selectedTour,
+            destinations,
+            galleryImages,
+            testimonials,
+            specialties,
+            wishlistItems,
+            wishlistTours,
+            userBookings,
+            allBookings,
+            recentBookings,
+            upcomingBookings,
+            pendingBookings,
+            completedBookings,
+            pendingPayments,
+            pendingPaymentsCount,
+            adminStats,
+            customers,
+            content,
+            settings,
+            adminSettings,
+            tourModalOpen,
+            editingTour,
+            tourForm,
+            navigateTo,
+            viewTour,
+            handleLogin,
+            handleRegister,
+            logout,
+            openBooking,
+            calculateTotal,
+            handleScreenshotUpload,
+            submitBooking,
+            cancelBooking,
+            confirmCompletion,
+            confirmBooking,
+            verifyPayment,
+            rejectPayment,
+            viewScreenshot,
+            addToWishlist,
+            removeFromWishlist,
+            openTourModal,
+            saveTour,
+            deleteTour,
+            submitContact,
+            openLightbox,
+            saveContent,
+            saveSettings,
+            saveAdminSettings,
+            showToast,
+            removeToast
+        };
+    }
+});
+
+app.mount('#app');
+</script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

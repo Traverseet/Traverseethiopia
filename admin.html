@@ -4,25 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Panel - Traverse Ethiopia Tour</title>
-    
+
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+    <!-- Vue.js 3 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+
     <style>
-        /* ===== ADMIN SPECIFIC CSS ===== */
+        /* ===== ADMIN CSS ===== */
         :root {
-            --primary-red: #c41e3a;
+            --primary: #c41e3a;
+            --primary-dark: #a01830;
             --primary-green: #006b3f;
-            --primary-yellow: #fcdd09;
             --sidebar-bg: #0d0d1a;
+            --sidebar-hover: rgba(255,255,255,0.08);
         }
-        
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #f0f2f5; }
-        
+
         /* ===== ADMIN SIDEBAR ===== */
         .admin-wrapper { display: flex; min-height: 100vh; }
         .admin-sidebar {
@@ -38,7 +43,7 @@
             transition: all 0.3s ease;
         }
         .admin-sidebar::-webkit-scrollbar { width: 4px; }
-        .admin-sidebar::-webkit-scrollbar-thumb { background: var(--primary-red); border-radius: 4px; }
+        .admin-sidebar::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
         .sidebar-brand {
             padding: 20px;
             text-align: center;
@@ -57,7 +62,7 @@
         }
         .sidebar-brand h5 { color: white; margin: 0; font-weight: 600; }
         .sidebar-brand .badge-admin {
-            background: var(--primary-red);
+            background: var(--primary);
             color: white;
             font-size: 10px;
             padding: 3px 12px;
@@ -84,12 +89,12 @@
             cursor: pointer;
             font-size: 14px;
         }
-        .sidebar-nav .nav-link:hover { color: white; background: rgba(255,255,255,0.08); }
-        .sidebar-nav .nav-link.active { color: white; background: var(--primary-red); }
+        .sidebar-nav .nav-link:hover { color: white; background: var(--sidebar-hover); }
+        .sidebar-nav .nav-link.active { color: white; background: var(--primary); }
         .sidebar-nav .nav-link i { font-size: 18px; width: 24px; }
         .sidebar-nav .nav-link .badge-count {
             margin-left: auto;
-            background: var(--primary-red);
+            background: var(--primary);
             color: white;
             font-size: 10px;
             padding: 2px 8px;
@@ -115,6 +120,8 @@
             top: 0;
             z-index: 999;
         }
+
+        .sidebar-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; }
 
         /* ===== STAT CARDS ===== */
         .stat-card {
@@ -173,16 +180,8 @@
         .badge-status.active { background: #d4edda; color: #155724; }
         .badge-status.inactive { background: #f8d7da; color: #721c24; }
 
-        .tour-image-thumb {
-            width: 60px;
-            height: 45px;
-            border-radius: 6px;
-            object-fit: cover;
-            background: #e9ecef;
-        }
-
         .btn-primary-custom {
-            background: var(--primary-red);
+            background: var(--primary);
             border: none;
             color: white;
             padding: 10px 24px;
@@ -191,14 +190,12 @@
             transition: all 0.3s ease;
         }
         .btn-primary-custom:hover {
-            background: #a01830;
+            background: var(--primary-dark);
             color: white;
             transform: translateY(-2px);
         }
 
         /* ===== RESPONSIVE ===== */
-        .sidebar-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; }
-        
         @media (max-width: 992px) {
             .admin-sidebar {
                 transform: translateX(-100%);
@@ -439,7 +436,6 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Image</th>
                                             <th>Name</th>
                                             <th>Category</th>
                                             <th>Duration</th>
@@ -451,9 +447,6 @@
                                     <tbody>
                                         <tr v-for="(tour, index) in tours" :key="tour.id">
                                             <td>{{ index + 1 }}</td>
-                                            <td>
-                                                <img :src="tour.image" class="tour-image-thumb" :alt="tour.name">
-                                            </td>
                                             <td><strong>{{ tour.name }}</strong></td>
                                             <td><span class="badge bg-secondary">{{ tour.category }}</span></td>
                                             <td>{{ tour.duration }}</td>
@@ -679,7 +672,6 @@
 <!-- ============================================================
 VUE 3
 ============================================================ -->
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script>
 const { createApp, ref, computed, onMounted } = Vue;
 
@@ -757,9 +749,9 @@ const app = createApp({
 
         // ===== TOURS DATA =====
         const tours = ref([
-            { id: 1, name: 'Historical Ethiopia Tour', category: 'historical', duration: '7 Days', price: 1500, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23c41e3a"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="14"%3ELalibela%3C/text%3E%3C/svg%3E', active: true },
-            { id: 2, name: 'Omo Valley Cultural Tour', category: 'cultural', duration: '6 Days', price: 1800, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23006b3f"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="14"%3EOmo Valley%3C/text%3E%3C/svg%3E', active: true },
-            { id: 3, name: 'Simien Mountains Trek', category: 'trekking', duration: '5 Days', price: 950, image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23fcdd09"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="black" font-size="14"%3ESimien%3C/text%3E%3C/svg%3E', active: true }
+            { id: 1, name: 'Historical Ethiopia Tour', category: 'historical', duration: '7 Days', price: 1500, active: true },
+            { id: 2, name: 'Omo Valley Cultural Tour', category: 'cultural', duration: '6 Days', price: 1800, active: true },
+            { id: 3, name: 'Simien Mountains Trek', category: 'trekking', duration: '5 Days', price: 950, active: true }
         ]);
 
         function deleteTour(id) {

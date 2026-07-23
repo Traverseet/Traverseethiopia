@@ -96,11 +96,12 @@
 </head>
 <body>
 
-<!-- ===== VUE APP ===== -->
+<!-- ============================================================
+SIMPLE VUE APP
+============================================================ -->
 <div id="app">
-
     <!-- ===== LOGIN SCREEN ===== -->
-    <div class="login-screen" :class="{ hidden: isLoggedIn }">
+    <div id="loginScreen" class="login-screen" :class="{ hidden: isLoggedIn }">
         <div class="login-container">
             <div style="text-align:center;margin-bottom:24px;">
                 <span style="font-size:3rem;">🇪🇹</span>
@@ -111,109 +112,72 @@
             <div>
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Email</label>
-                    <input v-model="loginForm.email" type="email" class="form-control" placeholder="your@email.com">
+                    <input id="loginEmail" class="form-control" placeholder="your@email.com">
                 </div>
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Password</label>
-                    <input v-model="loginForm.password" type="password" class="form-control" placeholder="Enter your password">
+                    <input id="loginPassword" type="password" class="form-control" placeholder="Enter your password">
                 </div>
-                <button class="btn btn-primary-custom w-100" @click="handleLogin" style="padding:14px;">🔓 Sign In</button>
+                <button class="btn btn-primary-custom w-100" onclick="handleLogin()" style="padding:14px;">🔓 Sign In</button>
                 <p class="text-center mt-3"><small class="text-muted">Admin: admin@traverse.com / admin123</small></p>
             </div>
         </div>
     </div>
 
     <!-- ===== MAIN APP ===== -->
-    <div v-if="isLoggedIn">
-
+    <div id="mainApp" style="display:none;">
         <!-- ===== NAVBAR ===== -->
         <nav class="navbar navbar-expand-lg navbar-custom">
             <div class="container">
-                <a class="navbar-brand" href="#" @click.prevent="currentPage = 'home'">
-                    🇪🇹 Traverse Ethiopia
-                </a>
+                <a class="navbar-brand" href="#" onclick="showPage('home')">🇪🇹 Traverse Ethiopia</a>
                 <div class="ms-auto">
-                    <span class="me-3">{{ userName }}</span>
-                    <button class="btn btn-sm btn-danger" @click="logout">Logout</button>
+                    <span id="userNameDisplay" class="me-3">Guest</span>
+                    <button class="btn btn-sm btn-danger" onclick="logout()">Logout</button>
                 </div>
             </div>
         </nav>
 
         <!-- ===== HOME ===== -->
-        <div v-if="currentPage === 'home'">
+        <div id="page-home">
             <section class="hero">
                 <div class="container">
                     <h1>Discover the <span>Hidden Wonders</span> of Ethiopia</h1>
                     <p class="lead">From rock-hewn churches to tribal cultures.</p>
-                    <button class="btn btn-primary-custom" @click="currentPage = 'tours'">Explore Tours</button>
+                    <button class="btn btn-primary-custom" onclick="showPage('tours')">Explore Tours</button>
                 </div>
             </section>
 
             <section class="py-5">
                 <div class="container">
                     <h2 class="text-center mb-4">Featured Tours</h2>
-                    <div class="row g-4">
-                        <div class="col-md-4" v-for="tour in featuredTours" :key="tour.id">
-                            <div class="tour-card">
-                                <div class="card-img-top" :style="{backgroundImage: `url(${tour.image})`}"></div>
-                                <div class="card-body">
-                                    <h5>{{ tour.name }}</h5>
-                                    <p class="text-muted small">{{ tour.duration }}</p>
-                                    <div class="d-flex justify-content-between align-items-center mt-3">
-                                        <span class="price">${{ tour.price }}</span>
-                                        <button class="btn btn-outline-primary btn-sm" @click="viewTour(tour.id)">Details</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="row g-4" id="featuredTours">
+                        <!-- Tours will be loaded here by JavaScript -->
                     </div>
                 </div>
             </section>
         </div>
 
         <!-- ===== TOURS ===== -->
-        <div v-if="currentPage === 'tours'">
+        <div id="page-tours" style="display:none;">
             <div class="container py-5">
                 <h1 class="text-center mb-4">All Tours</h1>
-                <div class="row g-4">
-                    <div class="col-md-4" v-for="tour in allTours" :key="tour.id">
-                        <div class="tour-card">
-                            <div class="card-img-top" :style="{backgroundImage: `url(${tour.image})`}"></div>
-                            <div class="card-body">
-                                <h5>{{ tour.name }}</h5>
-                                <p class="text-muted small">{{ tour.duration }}</p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <span class="price">${{ tour.price }}</span>
-                                    <button class="btn btn-outline-primary btn-sm" @click="viewTour(tour.id)">Details</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row g-4" id="allTours">
+                    <!-- Tours will be loaded here by JavaScript -->
                 </div>
                 <div class="text-center mt-4">
-                    <button class="btn btn-secondary" @click="currentPage = 'home'">Back to Home</button>
+                    <button class="btn btn-secondary" onclick="showPage('home')">Back to Home</button>
                 </div>
             </div>
         </div>
 
         <!-- ===== TOUR DETAIL ===== -->
-        <div v-if="currentPage === 'detail' && selectedTour">
+        <div id="page-detail" style="display:none;">
             <div class="container py-5">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <img :src="selectedTour.image" class="img-fluid rounded-3 w-100" style="max-height:400px;object-fit:cover;">
-                        <h1 class="mt-4">{{ selectedTour.name }}</h1>
-                        <p>{{ selectedTour.fullDescription }}</p>
-                        <button class="btn btn-secondary" @click="currentPage = 'tours'">← Back to Tours</button>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card p-4 sticky-top">
-                            <h5>Tour Price</h5>
-                            <span class="display-6 fw-bold text-primary">${{ selectedTour.price }}</span>
-                            <span class="text-muted small">per person</span>
-                            <button class="btn btn-primary-custom w-100 mt-3">Book Now</button>
-                        </div>
-                    </div>
+                <div class="row" id="tourDetailContent">
+                    <!-- Tour detail will be loaded here by JavaScript -->
+                </div>
+                <div class="text-center mt-4">
+                    <button class="btn btn-secondary" onclick="showPage('tours')">← Back to Tours</button>
                 </div>
             </div>
         </div>
@@ -225,7 +189,6 @@
                 <p><i class="bi bi-phone me-2"></i> +251 911 626 671</p>
             </div>
         </footer>
-
     </div>
 </div>
 
@@ -238,27 +201,29 @@ VUE 3 - LOCAL FILE
 // Check if Vue loaded
 if (typeof Vue === 'undefined') {
     document.body.innerHTML = `
-        <div style="text-align:center;padding:50px;font-family:Arial;">
-            <h2 style="color:#c41e3a;">⚠️ Loading...</h2>
+        <div style="text-align:center;padding:50px;font-family:Arial;background:#f8fafc;">
+            <h2 style="color:#c41e3a;">⚠️ Loading Vue.js...</h2>
             <p>Please refresh the page.</p>
             <button onclick="location.reload()" style="padding:10px 30px;background:#c41e3a;color:white;border:none;border-radius:8px;cursor:pointer;">Refresh</button>
         </div>
     `;
 } else {
-    // Simple Vue App
+    // ============================================================
+    // VUE APP
+    // ============================================================
     const { createApp, ref, computed } = Vue;
 
     const app = createApp({
         setup() {
             const isLoggedIn = ref(false);
             const currentPage = ref('home');
-            const loginForm = ref({ email: '', password: '' });
-            const selectedTour = ref(null);
-
             const user = ref({ name: 'Guest' });
             const userName = computed(() => user.value?.name || 'Guest');
+            const allTours = ref([]);
+            const selectedTour = ref(null);
 
-            const allTours = ref([
+            // Sample tours data (will be replaced by API later)
+            const sampleTours = [
                 { id: 1, name: 'Historical Ethiopia Tour', duration: '7 Days', price: 1500, 
                   image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23c41e3a"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="14"%3ELalibela%3C/text%3E%3C/svg%3E',
                   featured: true, fullDescription: 'Visit Lalibela, Gondar, Axum.' },
@@ -268,48 +233,151 @@ if (typeof Vue === 'undefined') {
                 { id: 3, name: 'Simien Mountains Trek', duration: '5 Days', price: 950,
                   image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23fcdd09"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="black" font-size="14"%3ESimien%3C/text%3E%3C/svg%3E',
                   featured: false, fullDescription: 'Trek through the stunning mountains.' }
-            ]);
+            ];
 
-            const featuredTours = computed(() => allTours.value.filter(t => t.featured));
-
-            function handleLogin() {
-                if (loginForm.value.email === 'admin@traverse.com' && loginForm.value.password === 'admin123') {
-                    user.value = { name: 'Admin' };
-                    isLoggedIn.value = true;
-                } else {
-                    user.value = { name: loginForm.value.email.split('@')[0] || 'Guest' };
-                    isLoggedIn.value = true;
+            // Load tours from API or use sample
+            async function loadTours() {
+                try {
+                    const response = await fetch('/api/tours');
+                    const data = await response.json();
+                    if (data.length > 0) {
+                        allTours.value = data;
+                    } else {
+                        allTours.value = sampleTours;
+                    }
+                } catch (e) {
+                    allTours.value = sampleTours;
                 }
-                loginForm.value = { email: '', password: '' };
-                currentPage.value = 'home';
+                renderTours();
             }
 
-            function logout() {
-                isLoggedIn.value = false;
-                user.value = { name: 'Guest' };
-                currentPage.value = 'home';
+            // Render tours to DOM
+            function renderTours() {
+                const featuredContainer = document.getElementById('featuredTours');
+                const allContainer = document.getElementById('allTours');
+                
+                const featured = allTours.value.filter(t => t.featured);
+                const all = allTours.value;
+
+                // Render featured tours
+                featuredContainer.innerHTML = featured.map(tour => `
+                    <div class="col-md-4">
+                        <div class="tour-card">
+                            <div class="card-img-top" style="background-image: url('${tour.image}'); background-size:cover; background-position:center;"></div>
+                            <div class="card-body">
+                                <h5>${tour.name}</h5>
+                                <p class="text-muted small">${tour.duration}</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="price">$${tour.price}</span>
+                                    <button class="btn btn-outline-primary btn-sm" onclick="viewTour(${tour.id})">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Render all tours
+                allContainer.innerHTML = all.map(tour => `
+                    <div class="col-md-4">
+                        <div class="tour-card">
+                            <div class="card-img-top" style="background-image: url('${tour.image}'); background-size:cover; background-position:center;"></div>
+                            <div class="card-body">
+                                <h5>${tour.name}</h5>
+                                <p class="text-muted small">${tour.duration}</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="price">$${tour.price}</span>
+                                    <button class="btn btn-outline-primary btn-sm" onclick="viewTour(${tour.id})">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
             }
 
+            // View tour detail
             function viewTour(id) {
                 const tour = allTours.value.find(t => t.id === id);
                 if (tour) {
                     selectedTour.value = tour;
-                    currentPage.value = 'detail';
+                    showPage('detail');
+                    renderDetail();
                 }
             }
+
+            // Render tour detail
+            function renderDetail() {
+                const container = document.getElementById('tourDetailContent');
+                const tour = selectedTour.value;
+                if (!tour) return;
+                
+                container.innerHTML = `
+                    <div class="col-lg-8">
+                        <img src="${tour.image}" class="img-fluid rounded-3 w-100" style="max-height:400px;object-fit:cover;">
+                        <h1 class="mt-4">${tour.name}</h1>
+                        <p>${tour.fullDescription || 'Amazing tour experience.'}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card p-4 sticky-top">
+                            <h5>Tour Price</h5>
+                            <span class="display-6 fw-bold text-primary">$${tour.price}</span>
+                            <span class="text-muted small">per person</span>
+                            <button class="btn btn-primary-custom w-100 mt-3">Book Now</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Show page
+            function showPage(page) {
+                currentPage.value = page;
+                document.getElementById('page-home').style.display = page === 'home' ? 'block' : 'none';
+                document.getElementById('page-tours').style.display = page === 'tours' ? 'block' : 'none';
+                document.getElementById('page-detail').style.display = page === 'detail' ? 'block' : 'none';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Login function - accessible globally
+            window.handleLogin = function() {
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                if (email === 'admin@traverse.com' && password === 'admin123') {
+                    user.value = { name: 'Admin' };
+                } else {
+                    user.value = { name: email.split('@')[0] || 'Guest' };
+                }
+                isLoggedIn.value = true;
+                document.getElementById('mainApp').style.display = 'block';
+                document.getElementById('userNameDisplay').textContent = userName.value;
+                document.getElementById('loginScreen').classList.add('hidden');
+                showPage('home');
+                loadTours();
+            };
+
+            // Logout function
+            window.logout = function() {
+                isLoggedIn.value = false;
+                user.value = { name: 'Guest' };
+                document.getElementById('mainApp').style.display = 'none';
+                document.getElementById('loginScreen').classList.remove('hidden');
+                document.getElementById('loginEmail').value = '';
+                document.getElementById('loginPassword').value = '';
+            };
+
+            // View tour - accessible globally
+            window.viewTour = viewTour;
+            window.showPage = showPage;
 
             return {
                 isLoggedIn,
                 currentPage,
-                loginForm,
-                selectedTour,
                 user,
                 userName,
                 allTours,
-                featuredTours,
-                handleLogin,
-                logout,
-                viewTour
+                selectedTour,
+                showPage,
+                viewTour,
+                loadTours
             };
         }
     });

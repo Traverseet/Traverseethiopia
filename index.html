@@ -787,18 +787,61 @@
 
                 <h6 class="mb-3">Customer Information</h6>
                 <div class="row g-3">
-                    <div class="col-md-6"><label class="form-label">Full Name *</label><input v-model="bookingForm.name" class="form-control" required></div>
-                    <div class="col-md-6"><label class="form-label">Email *</label><input v-model="bookingForm.email" type="email" class="form-control" required></div>
-                    <div class="col-md-6"><label class="form-label">Phone *</label><input v-model="bookingForm.phone" class="form-control" required></div>
-                    <div class="col-md-6"><label class="form-label">Nationality</label><input v-model="bookingForm.nationality" class="form-control"></div>
-                    <div class="col-md-4"><label class="form-label">Age *</label><input v-model.number="bookingForm.age" type="number" class="form-control" required></div>
-                    <div class="col-md-4"><label class="form-label">Sex *</label><select v-model="bookingForm.sex" class="form-select"><option value="Male">Male</option><option value="Female">Female</option></select></div>
-                    <div class="col-md-4"><label class="form-label">Passport *</label><input v-model="bookingForm.passport" class="form-control" required></div>
-                    <div class="col-md-6"><label class="form-label">Travel Date *</label><input v-model="bookingForm.date" type="date" class="form-control" required></div>
-                    <div class="col-md-6"><label class="form-label">Travelers *</label><input v-model.number="bookingForm.travelers" type="number" min="1" max="20" class="form-control" required></div>
-                    <div class="col-md-6"><label class="form-label">Infants (Free)</label><input v-model.number="bookingForm.infants" type="number" min="0" max="10" class="form-control"></div>
-                    <div class="col-md-6"><label class="form-label">Payment Method *</label><select v-model="bookingForm.paymentMethod" class="form-select"><option value="telebirr">📱 Telebirr</option><option value="cash">💵 Cash on Arrival</option><option value="card">💳 Credit Card</option></select></div>
-                    <div class="col-12"><label class="form-label">Special Requests</label><textarea v-model="bookingForm.requests" class="form-control" rows="2"></textarea></div>
+                    <div class="col-md-6">
+                        <label class="form-label">Full Name *</label>
+                        <input v-model="bookingForm.name" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Email *</label>
+                        <input v-model="bookingForm.email" type="email" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Phone *</label>
+                        <input v-model="bookingForm.phone" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Nationality</label>
+                        <input v-model="bookingForm.nationality" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Age *</label>
+                        <input v-model.number="bookingForm.age" type="number" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Sex *</label>
+                        <select v-model="bookingForm.sex" class="form-select">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Passport *</label>
+                        <input v-model="bookingForm.passport" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Travel Date *</label>
+                        <input v-model="bookingForm.date" type="date" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Travelers *</label>
+                        <input v-model.number="bookingForm.travelers" type="number" min="1" max="20" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Infants (Free)</label>
+                        <input v-model.number="bookingForm.infants" type="number" min="0" max="10" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Payment Method *</label>
+                        <select v-model="bookingForm.paymentMethod" class="form-select">
+                            <option value="telebirr">📱 Telebirr</option>
+                            <option value="cash">💵 Cash on Arrival</option>
+                            <option value="card">💳 Credit Card</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Special Requests</label>
+                        <textarea v-model="bookingForm.requests" class="form-control" rows="2"></textarea>
+                    </div>
                 </div>
 
                 <div class="mt-4 p-3 bg-light rounded-3">
@@ -817,7 +860,9 @@
                         <span>Upload Screenshot</span>
                         <input type="file" id="screenshotUpload" accept="image/*" @change="handleScreenshotUpload" style="display:none;">
                     </div>
-                    <div v-if="bookingForm.screenshot" class="mt-2"><img :src="bookingForm.screenshot" style="max-width:100px;max-height:100px;border-radius:8px;"></div>
+                    <div v-if="bookingForm.screenshot" class="mt-2">
+                        <img :src="bookingForm.screenshot" style="max-width:100px;max-height:100px;border-radius:8px;">
+                    </div>
                 </div>
             </div>
             <div class="modal-footer p-4 border-top">
@@ -842,11 +887,12 @@
 </div>
 
 <!-- ============================================================
-VUE 3 - LOCAL FILE
+VUE 3 - USING LOCAL FILE
 ============================================================ -->
 <script src="vue.js"></script>
 
 <script>
+// Your Vue app code
 const { createApp, ref, computed } = Vue;
 
 const app = createApp({
@@ -861,7 +907,13 @@ const app = createApp({
         const bookingTour = ref(null);
 
         // ===== USER =====
-        const user = ref({ id: 1, name: 'Guest User', email: 'guest@email.com', role: 'guest' });
+        const user = ref({
+            id: 1,
+            name: 'Guest User',
+            email: 'guest@email.com',
+            role: 'guest'
+        });
+
         const userRole = computed(() => user.value?.role || 'guest');
         const userName = computed(() => user.value?.name || 'User');
         const userInitial = computed(() => user.value?.name?.charAt(0)?.toUpperCase() || 'U');
@@ -880,14 +932,22 @@ const app = createApp({
         // ===== TOASTS =====
         const toasts = ref([]);
         function showToast(title, message, type = 'success') {
-            const icons = { success: 'bi bi-check-circle text-success', error: 'bi bi-x-circle text-danger', warning: 'bi bi-exclamation-triangle text-warning' };
+            const icons = {
+                success: 'bi bi-check-circle text-success',
+                error: 'bi bi-x-circle text-danger',
+                warning: 'bi bi-exclamation-triangle text-warning'
+            };
             toasts.value.push({ title, message, type, icon: icons[type] || icons.success });
-            setTimeout(() => toasts.value.shift(), 4000);
+            setTimeout(() => { toasts.value.shift(); }, 4000);
         }
         function removeToast(index) { toasts.value.splice(index, 1); }
 
         // ===== NAVIGATION =====
-        function navigateTo(page) { currentPage.value = page; mobileMenuOpen.value = false; window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        function navigateTo(page) {
+            currentPage.value = page;
+            mobileMenuOpen.value = false;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
         // ===== AUTH =====
         function handleLogin() {
@@ -913,18 +973,88 @@ const app = createApp({
             navigateTo('home');
         }
 
-        function logout() { isLoggedIn.value = false; user.value = null; showToast('Logged Out', 'See you next time!'); navigateTo('home'); }
+        function logout() {
+            isLoggedIn.value = false;
+            user.value = null;
+            showToast('Logged Out', 'See you next time!');
+            navigateTo('home');
+        }
 
         // ===== DATA =====
         const allTours = ref([
-            { id: 1, name: 'Historical Ethiopia Tour', category: 'historical', duration: '7 Days', price: 1500, location: 'Lalibela, Gondar, Axum', image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23c41e3a"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="14"%3ELalibela%3C/text%3E%3C/svg%3E', featured: true, active: true, fullDescription: 'Visit the rock-hewn churches of Lalibela, the castles of Gondar, the monasteries of Bahir Dar, and the ancient obelisks of Axum.', itinerary: [ { day: 1, title: 'Arrival in Addis Ababa', description: 'Welcome and transfer to hotel.' }, { day: 2, title: 'Fly to Lalibela', description: 'Visit the famous rock-hewn churches.' }, { day: 3, title: 'Lalibela to Gondar', description: 'Explore the castles of Gondar.' }, { day: 4, title: 'Gondar to Bahir Dar', description: 'Visit Lake Tana monasteries.' }, { day: 5, title: 'Bahir Dar to Axum', description: 'Visit the ancient obelisks.' }, { day: 6, title: 'Axum to Addis Ababa', description: 'Return to Addis Ababa.' }, { day: 7, title: 'Departure', description: 'Transfer to airport.' } ] },
-            { id: 2, name: 'Omo Valley Cultural Tour', category: 'cultural', duration: '6 Days', price: 1800, location: 'Omo Valley', image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23006b3f"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="14"%3EOmo Valley%3C/text%3E%3C/svg%3E', featured: true, active: true, fullDescription: 'Discover the rich tribal cultures of the Omo Valley.', itinerary: [ { day: 1, title: 'Arrival in Addis Ababa', description: 'Transfer to hotel.' }, { day: 2, title: 'Fly to Jinka', description: 'Visit the Hamer tribe.' }, { day: 3, title: 'Mursi Tribe', description: 'Visit the Mursi people.' }, { day: 4, title: 'Karo Tribe', description: 'Visit the Karo people.' }, { day: 5, title: 'Dassanech Tribe', description: 'Visit the Dassanech people.' }, { day: 6, title: 'Return to Addis Ababa', description: 'Fly back.' } ] },
-            { id: 3, name: 'Simien Mountains Trek', category: 'trekking', duration: '5 Days', price: 950, location: 'Simien Mountains', image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23fcdd09"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="black" font-size="14"%3ESimien%3C/text%3E%3C/svg%3E', featured: false, active: true, fullDescription: 'Trek through the stunning Simien Mountains.', itinerary: [ { day: 1, title: 'Drive to Simien Mountains', description: 'Start trekking.' }, { day: 2, title: 'Trek to Sankaber', description: 'Trek through the mountains.' }, { day: 3, title: 'Trek to Geech', description: 'Continue trekking.' }, { day: 4, title: 'Trek to Chenek', description: 'Trek to the final camp.' }, { day: 5, title: 'Return to Gondar', description: 'Drive back.' } ] }
+            { 
+                id: 1, 
+                name: 'Historical Ethiopia Tour', 
+                category: 'historical', 
+                duration: '7 Days', 
+                price: 1500, 
+                location: 'Lalibela, Gondar, Axum',
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23c41e3a"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="14"%3ELalibela%3C/text%3E%3C/svg%3E',
+                featured: true,
+                active: true,
+                fullDescription: 'Visit the rock-hewn churches of Lalibela, the castles of Gondar, the monasteries of Bahir Dar, and the ancient obelisks of Axum.',
+                itinerary: [
+                    { day: 1, title: 'Arrival in Addis Ababa', description: 'Welcome and transfer to hotel.' },
+                    { day: 2, title: 'Fly to Lalibela', description: 'Visit the famous rock-hewn churches.' },
+                    { day: 3, title: 'Lalibela to Gondar', description: 'Explore the castles of Gondar.' },
+                    { day: 4, title: 'Gondar to Bahir Dar', description: 'Visit Lake Tana monasteries.' },
+                    { day: 5, title: 'Bahir Dar to Axum', description: 'Visit the ancient obelisks.' },
+                    { day: 6, title: 'Axum to Addis Ababa', description: 'Return to Addis Ababa.' },
+                    { day: 7, title: 'Departure', description: 'Transfer to airport.' }
+                ]
+            },
+            { 
+                id: 2, 
+                name: 'Omo Valley Cultural Tour', 
+                category: 'cultural', 
+                duration: '6 Days', 
+                price: 1800,
+                location: 'Omo Valley',
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23006b3f"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="14"%3EOmo Valley%3C/text%3E%3C/svg%3E',
+                featured: true,
+                active: true,
+                fullDescription: 'Discover the rich tribal cultures of the Omo Valley. Visit the Hamer, Mursi, Karo, and Dassanech tribes.',
+                itinerary: [
+                    { day: 1, title: 'Arrival in Addis Ababa', description: 'Transfer to hotel.' },
+                    { day: 2, title: 'Fly to Jinka', description: 'Visit the Hamer tribe.' },
+                    { day: 3, title: 'Mursi Tribe', description: 'Visit the Mursi people.' },
+                    { day: 4, title: 'Karo Tribe', description: 'Visit the Karo people.' },
+                    { day: 5, title: 'Dassanech Tribe', description: 'Visit the Dassanech people.' },
+                    { day: 6, title: 'Return to Addis Ababa', description: 'Fly back.' }
+                ]
+            },
+            { 
+                id: 3, 
+                name: 'Simien Mountains Trek', 
+                category: 'trekking', 
+                duration: '5 Days', 
+                price: 950,
+                location: 'Simien Mountains',
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23fcdd09"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="black" font-size="14"%3ESimien%3C/text%3E%3C/svg%3E',
+                featured: false,
+                active: true,
+                fullDescription: 'Trek through the stunning Simien Mountains with breathtaking views and wildlife.',
+                itinerary: [
+                    { day: 1, title: 'Drive to Simien Mountains', description: 'Start trekking.' },
+                    { day: 2, title: 'Trek to Sankaber', description: 'Trek through the mountains.' },
+                    { day: 3, title: 'Trek to Geech', description: 'Continue trekking.' },
+                    { day: 4, title: 'Trek to Chenek', description: 'Trek to the final camp.' },
+                    { day: 5, title: 'Return to Gondar', description: 'Drive back.' }
+                ]
+            }
         ]);
 
         const featuredTours = computed(() => allTours.value.filter(t => t.featured));
         const selectedTour = ref(null);
-        function viewTour(id) { const tour = allTours.value.find(t => t.id === id); if (tour) { selectedTour.value = tour; currentPage.value = 'tourDetail'; window.scrollTo({ top: 0, behavior: 'smooth' }); } }
+
+        function viewTour(id) {
+            const tour = allTours.value.find(t => t.id === id);
+            if (tour) {
+                selectedTour.value = tour;
+                currentPage.value = 'tourDetail';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
 
         // ===== DESTINATIONS =====
         const destinations = ref([
@@ -966,7 +1096,10 @@ const app = createApp({
         });
 
         // ===== CONTENT =====
-        const content = ref({ heroTitle: 'Discover the Hidden Wonders of Ethiopia', heroSubtitle: 'From rock-hewn churches to tribal cultures, we create unforgettable journeys.' });
+        const content = ref({
+            heroTitle: 'Discover the Hidden Wonders of Ethiopia',
+            heroSubtitle: 'From rock-hewn churches to tribal cultures, we create unforgettable journeys.'
+        });
 
         // ===== BOOKING FUNCTIONS =====
         function openBooking(tourId) {
@@ -994,7 +1127,9 @@ const app = createApp({
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = (e) => { bookingForm.value.screenshot = e.target.result; };
+                reader.onload = (e) => {
+                    bookingForm.value.screenshot = e.target.result;
+                };
                 reader.readAsDataURL(file);
             }
         }
@@ -1033,45 +1168,107 @@ const app = createApp({
         // ===== ADMIN FUNCTIONS =====
         function confirmBooking(id) {
             const booking = allBookings.value.find(b => b.id === id);
-            if (booking) { booking.status = 'confirmed'; showToast('Booking Confirmed', `Booking ${booking.number} has been confirmed.`); }
+            if (booking) {
+                booking.status = 'confirmed';
+                showToast('Booking Confirmed', `Booking ${booking.number} has been confirmed.`);
+            }
         }
+
         function cancelBooking(id) {
             const booking = allBookings.value.find(b => b.id === id);
-            if (booking) { booking.status = 'cancelled'; showToast('Booking Cancelled', `Booking ${booking.number} has been cancelled.`); }
+            if (booking) {
+                booking.status = 'cancelled';
+                showToast('Booking Cancelled', `Booking ${booking.number} has been cancelled.`);
+            }
         }
+
         function verifyPayment(id) {
             const payment = pendingPayments.value.find(p => p.id === id);
-            if (payment) { pendingPayments.value = pendingPayments.value.filter(p => p.id !== id); showToast('Payment Verified', `Payment for ${payment.booking} has been verified.`); }
+            if (payment) {
+                pendingPayments.value = pendingPayments.value.filter(p => p.id !== id);
+                showToast('Payment Verified', `Payment for ${payment.booking} has been verified.`);
+            }
         }
+
         function rejectPayment(id) {
             const payment = pendingPayments.value.find(p => p.id === id);
-            if (payment) { pendingPayments.value = pendingPayments.value.filter(p => p.id !== id); showToast('Payment Rejected', `Payment for ${payment.booking} has been rejected.`); }
+            if (payment) {
+                pendingPayments.value = pendingPayments.value.filter(p => p.id !== id);
+                showToast('Payment Rejected', `Payment for ${payment.booking} has been rejected.`);
+            }
         }
+
         function openTourModal(tour = null) {
-            if (tour) { showToast('Edit Tour', `Editing ${tour.name}`); } else { showToast('Add Tour', 'Add new tour form'); }
+            if (tour) {
+                showToast('Edit Tour', `Editing ${tour.name}`);
+            } else {
+                showToast('Add Tour', 'Add new tour form');
+            }
         }
+
         function deleteTour(id) {
             if (confirm('Delete this tour?')) {
                 allTours.value = allTours.value.filter(t => t.id !== id);
                 showToast('Tour Deleted', 'Tour has been removed.', 'warning');
             }
         }
-        function saveContent() { showToast('Content Saved', 'Home page content updated successfully.'); }
 
+        function saveContent() {
+            showToast('Content Saved', 'Home page content updated successfully.');
+        }
+
+        // ===== RETURN =====
         return {
-            isLoggedIn, isSignUp, currentPage, mobileMenuOpen, adminTab, bookingModalOpen, bookingTour, bookingForm,
-            user, userRole, userName, userInitial, loginForm, registerForm, contactForm, toasts,
-            allTours, featuredTours, selectedTour, destinations, userBookings, allBookings,
-            pendingPayments, adminStats, content,
-            navigateTo, viewTour, handleLogin, handleRegister, logout,
-            openBooking, calculateTotal, handleScreenshotUpload, submitBooking, submitContact,
-            confirmBooking, cancelBooking, verifyPayment, rejectPayment, openTourModal, deleteTour, saveContent,
-            showToast, removeToast
+            isLoggedIn,
+            isSignUp,
+            currentPage,
+            mobileMenuOpen,
+            adminTab,
+            bookingModalOpen,
+            bookingTour,
+            bookingForm,
+            user,
+            userRole,
+            userName,
+            userInitial,
+            loginForm,
+            registerForm,
+            contactForm,
+            toasts,
+            allTours,
+            featuredTours,
+            selectedTour,
+            destinations,
+            userBookings,
+            allBookings,
+            pendingPayments,
+            adminStats,
+            content,
+            navigateTo,
+            viewTour,
+            handleLogin,
+            handleRegister,
+            logout,
+            openBooking,
+            calculateTotal,
+            handleScreenshotUpload,
+            submitBooking,
+            submitContact,
+            confirmBooking,
+            cancelBooking,
+            verifyPayment,
+            rejectPayment,
+            openTourModal,
+            deleteTour,
+            saveContent,
+            showToast,
+            removeToast
         };
     }
 });
 
 app.mount('#app');
 </script>
+
 </body>
 </html>

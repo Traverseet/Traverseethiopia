@@ -50,6 +50,18 @@
             background: #a01830;
             color: white;
         }
+        .btn-outline-custom {
+            background: transparent;
+            color: #c41e3a;
+            border: 2px solid #c41e3a;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        .btn-outline-custom:hover {
+            background: #c41e3a;
+            color: white;
+        }
         .tour-card {
             border: none;
             border-radius: 16px;
@@ -57,7 +69,9 @@
             background: white;
             box-shadow: 0 2px 12px rgba(0,0,0,0.06);
             height: 100%;
+            transition: transform 0.3s ease;
         }
+        .tour-card:hover { transform: translateY(-5px); }
         .tour-card .card-img-top {
             height: 200px;
             object-fit: cover;
@@ -92,298 +106,552 @@
             width: 100%;
             max-width: 440px;
         }
+        .stat-number { font-size: 2.5rem; font-weight: 700; color: #fcdd09; }
+        .stats-section { background: #1a1a2e; color: white; padding: 60px 0; }
+        .testimonial-card {
+            border: none;
+            border-radius: 16px;
+            padding: 30px;
+            background: white;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .testimonial-card .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #c41e3a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .badge-gold { background: #fcdd09; color: #1a1a2e; }
+        .btn-book {
+            background: #c41e3a;
+            color: white;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        .btn-book:hover { background: #a01830; color: white; }
     </style>
 </head>
 <body>
 
-<!-- ============================================================
-SIMPLE VUE APP
-============================================================ -->
-<div id="app">
-    <!-- ===== LOGIN SCREEN ===== -->
-    <div id="loginScreen" class="login-screen" :class="{ hidden: isLoggedIn }">
-        <div class="login-container">
-            <div style="text-align:center;margin-bottom:24px;">
-                <span style="font-size:3rem;">🇪🇹</span>
-                <h2 style="color:#c41e3a;font-weight:800;">Traverse Ethiopia</h2>
-                <p style="color:#6c757d;">Sign in to your account</p>
-            </div>
-
-            <div>
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Email</label>
-                    <input id="loginEmail" class="form-control" placeholder="your@email.com">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Password</label>
-                    <input id="loginPassword" type="password" class="form-control" placeholder="Enter your password">
-                </div>
-                <button class="btn btn-primary-custom w-100" onclick="handleLogin()" style="padding:14px;">🔓 Sign In</button>
-                <p class="text-center mt-3"><small class="text-muted">Admin: admin@traverse.com / admin123</small></p>
-            </div>
+<!-- ===== LOGIN SCREEN ===== -->
+<div id="loginScreen" class="login-screen">
+    <div class="login-container">
+        <div style="text-align:center;margin-bottom:24px;">
+            <span style="font-size:3rem;">🇪🇹</span>
+            <h2 style="color:#c41e3a;font-weight:800;">Traverse Ethiopia</h2>
+            <p style="color:#6c757d;">Sign in to your account</p>
         </div>
-    </div>
-
-    <!-- ===== MAIN APP ===== -->
-    <div id="mainApp" style="display:none;">
-        <!-- ===== NAVBAR ===== -->
-        <nav class="navbar navbar-expand-lg navbar-custom">
-            <div class="container">
-                <a class="navbar-brand" href="#" onclick="showPage('home')">🇪🇹 Traverse Ethiopia</a>
-                <div class="ms-auto">
-                    <span id="userNameDisplay" class="me-3">Guest</span>
-                    <button class="btn btn-sm btn-danger" onclick="logout()">Logout</button>
-                </div>
+        <div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Email</label>
+                <input id="loginEmail" type="email" class="form-control" placeholder="your@email.com">
             </div>
-        </nav>
-
-        <!-- ===== HOME ===== -->
-        <div id="page-home">
-            <section class="hero">
-                <div class="container">
-                    <h1>Discover the <span>Hidden Wonders</span> of Ethiopia</h1>
-                    <p class="lead">From rock-hewn churches to tribal cultures.</p>
-                    <button class="btn btn-primary-custom" onclick="showPage('tours')">Explore Tours</button>
-                </div>
-            </section>
-
-            <section class="py-5">
-                <div class="container">
-                    <h2 class="text-center mb-4">Featured Tours</h2>
-                    <div class="row g-4" id="featuredTours">
-                        <!-- Tours will be loaded here by JavaScript -->
-                    </div>
-                </div>
-            </section>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Password</label>
+                <input id="loginPassword" type="password" class="form-control" placeholder="Enter your password">
+            </div>
+            <button class="btn btn-primary-custom w-100" onclick="handleLogin()" style="padding:14px;">🔓 Sign In</button>
+            <p class="text-center mt-3"><small class="text-muted">Admin: admin@traverse.com / admin123</small></p>
         </div>
-
-        <!-- ===== TOURS ===== -->
-        <div id="page-tours" style="display:none;">
-            <div class="container py-5">
-                <h1 class="text-center mb-4">All Tours</h1>
-                <div class="row g-4" id="allTours">
-                    <!-- Tours will be loaded here by JavaScript -->
-                </div>
-                <div class="text-center mt-4">
-                    <button class="btn btn-secondary" onclick="showPage('home')">Back to Home</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== TOUR DETAIL ===== -->
-        <div id="page-detail" style="display:none;">
-            <div class="container py-5">
-                <div class="row" id="tourDetailContent">
-                    <!-- Tour detail will be loaded here by JavaScript -->
-                </div>
-                <div class="text-center mt-4">
-                    <button class="btn btn-secondary" onclick="showPage('tours')">← Back to Tours</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== FOOTER ===== -->
-        <footer class="footer">
-            <div class="container text-center">
-                <p>&copy; 2024 Traverse Ethiopia Tour. All rights reserved.</p>
-                <p><i class="bi bi-phone me-2"></i> +251 911 626 671</p>
-            </div>
-        </footer>
     </div>
 </div>
 
-<!-- ============================================================
-VUE 3 - LOCAL FILE
-============================================================ -->
-<script src="vue.js"></script>
+<!-- ===== MAIN APP ===== -->
+<div id="mainApp" style="display:none;">
 
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="showPage('home')">🇪🇹 Traverse Ethiopia</a>
+            <div class="ms-auto d-flex align-items-center gap-3">
+                <span id="userNameDisplay" class="fw-semibold">Guest</span>
+                <button class="btn btn-sm btn-danger" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================================
+    HOME PAGE
+    ============================================================ -->
+    <div id="page-home">
+        <!-- HERO -->
+        <section class="hero">
+            <div class="container">
+                <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
+                    <span class="badge bg-light text-dark"><i class="bi bi-phone me-1"></i> Telebirr: 0911626671</span>
+                    <span class="badge bg-light text-dark"><i class="bi bi-airplane me-1"></i> Ethiopian Airlines</span>
+                    <span class="badge bg-light text-dark"><i class="bi bi-wifi me-1"></i> Ethio Telecom</span>
+                </div>
+                <h1>Discover the <span>Hidden Wonders</span> of Ethiopia</h1>
+                <p class="lead">From rock-hewn churches to tribal cultures, we create unforgettable journeys.</p>
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    <button class="btn btn-primary-custom" onclick="showPage('tours')">Explore Tours</button>
+                    <button class="btn btn-outline-light" style="border:2px solid white;border-radius:50px;padding:12px 32px;color:white;font-weight:600;background:transparent;" onclick="showPage('contact')">Contact Us</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY US -->
+        <section class="py-5" style="background:white;">
+            <div class="container">
+                <h2 class="text-center mb-4">Why Travel With Us?</h2>
+                <div class="row g-4">
+                    <div class="col-md-3 text-center">
+                        <div class="p-4 bg-light rounded-3">
+                            <i class="bi bi-people-fill" style="font-size:2.5rem;color:#c41e3a;"></i>
+                            <h5 class="mt-3">Local Guides</h5>
+                            <p class="text-muted small">Expert knowledge of Ethiopian history and culture.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="p-4 bg-light rounded-3">
+                            <i class="bi bi-geo-alt-fill" style="font-size:2.5rem;color:#c41e3a;"></i>
+                            <h5 class="mt-3">Custom Tours</h5>
+                            <p class="text-muted small">Private, group, family, and adventure tours.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="p-4 bg-light rounded-3">
+                            <i class="bi bi-truck" style="font-size:2.5rem;color:#c41e3a;"></i>
+                            <h5 class="mt-3">Safe Transport</h5>
+                            <p class="text-muted small">Modern vehicles and professional drivers.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="p-4 bg-light rounded-3">
+                            <i class="bi bi-headset" style="font-size:2.5rem;color:#c41e3a;"></i>
+                            <h5 class="mt-3">24/7 Support</h5>
+                            <p class="text-muted small">Support before, during, and after your trip.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURED TOURS -->
+        <section class="py-5">
+            <div class="container">
+                <h2 class="text-center mb-4">Featured Tours</h2>
+                <div class="row g-4" id="featuredTours"></div>
+                <div class="text-center mt-4">
+                    <button class="btn btn-outline-custom" onclick="showPage('tours')">View All Tours</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section class="py-5" style="background:#f8fafc;">
+            <div class="container">
+                <h2 class="text-center mb-4">What Travelers Say</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="testimonial-card">
+                            <div class="text-warning mb-2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+                            <p class="fst-italic">"Amazing experience. Professional guides and excellent service."</p>
+                            <div class="d-flex align-items-center mt-3">
+                                <div class="avatar me-3">S</div>
+                                <div><h6 class="mb-0">Sarah Johnson</h6><small class="text-muted">Historical Tour</small></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="testimonial-card">
+                            <div class="text-warning mb-2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+                            <p class="fst-italic">"The best way to discover Ethiopia. Highly recommend!"</p>
+                            <div class="d-flex align-items-center mt-3">
+                                <div class="avatar me-3">M</div>
+                                <div><h6 class="mb-0">Michael Chen</h6><small class="text-muted">Omo Valley Tour</small></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="testimonial-card">
+                            <div class="text-warning mb-2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+                            <p class="fst-italic">"Unforgettable trip to the Simien Mountains. Incredible views."</p>
+                            <div class="d-flex align-items-center mt-3">
+                                <div class="avatar me-3">E</div>
+                                <div><h6 class="mb-0">Emma Williams</h6><small class="text-muted">Simien Trek</small></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATS -->
+        <section class="stats-section">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-md-3 col-6"><div class="stat-number">500+</div><div class="stat-label">Happy Travelers</div></div>
+                    <div class="col-md-3 col-6"><div class="stat-number">12+</div><div class="stat-label">Years Experience</div></div>
+                    <div class="col-md-3 col-6"><div class="stat-number">50+</div><div class="stat-label">Tours Available</div></div>
+                    <div class="col-md-3 col-6"><div class="stat-number">98%</div><div class="stat-label">Satisfaction Rate</div></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ============================================================
+    TOURS PAGE
+    ============================================================ -->
+    <div id="page-tours" style="display:none;">
+        <div class="container py-5">
+            <h1 class="text-center mb-4">All Tours</h1>
+            <div class="row g-4" id="allTours"></div>
+            <div class="text-center mt-4">
+                <button class="btn btn-outline-custom" onclick="showPage('home')">Back to Home</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    TOUR DETAIL PAGE
+    ============================================================ -->
+    <div id="page-detail" style="display:none;">
+        <div class="container py-5">
+            <div id="tourDetailContent"></div>
+            <div class="text-center mt-4">
+                <button class="btn btn-outline-custom" onclick="showPage('tours')">← Back to Tours</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    CONTACT PAGE
+    ============================================================ -->
+    <div id="page-contact" style="display:none;">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <h1 class="text-center mb-4">Contact Us</h1>
+                    <div class="card p-4">
+                        <form onsubmit="submitContact(event)">
+                            <div class="mb-3">
+                                <label class="form-label">Full Name *</label>
+                                <input id="contactName" type="text" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email *</label>
+                                <input id="contactEmail" type="email" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Message *</label>
+                                <textarea id="contactMessage" class="form-control" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom w-100">Send Message</button>
+                        </form>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-outline-custom" onclick="showPage('home')">← Back to Home</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    FOOTER
+    ============================================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>🇪🇹 Traverse Ethiopia Tour</h5>
+                    <p class="text-muted">Explore Ethiopia's culture, nature, history & adventure with us.</p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Quick Links</h6>
+                    <a href="#" onclick="showPage('home')" class="text-white text-decoration-none d-block">Home</a>
+                    <a href="#" onclick="showPage('tours')" class="text-white text-decoration-none d-block">Tours</a>
+                    <a href="#" onclick="showPage('contact')" class="text-white text-decoration-none d-block">Contact</a>
+                </div>
+                <div class="col-md-5">
+                    <h6>Contact</h6>
+                    <p><i class="bi bi-phone me-2"></i> +251 911 626 671</p>
+                    <p><i class="bi bi-envelope me-2"></i> travereseethiopia@gmail.com</p>
+                    <p><i class="bi bi-geo-alt me-2"></i> Addis Ababa, Ethiopia</p>
+                    <p><i class="bi bi-phone me-2"></i> Telebirr: 0911626671</p>
+                </div>
+            </div>
+            <hr class="border-secondary">
+            <p class="text-center text-muted small">&copy; 2024 Traverse Ethiopia Tour. All rights reserved.</p>
+        </div>
+    </footer>
+</div>
+
+<!-- ============================================================
+JAVASCRIPT - NO VUE.JS REQUIRED!
+============================================================ -->
 <script>
-// Check if Vue loaded
-if (typeof Vue === 'undefined') {
-    document.body.innerHTML = `
-        <div style="text-align:center;padding:50px;font-family:Arial;background:#f8fafc;">
-            <h2 style="color:#c41e3a;">⚠️ Loading Vue.js...</h2>
-            <p>Please refresh the page.</p>
-            <button onclick="location.reload()" style="padding:10px 30px;background:#c41e3a;color:white;border:none;border-radius:8px;cursor:pointer;">Refresh</button>
+// ============================================================
+// DATA
+// ============================================================
+const toursData = [
+    { 
+        id: 1, 
+        name: 'Historical Ethiopia Tour', 
+        category: 'historical', 
+        duration: '7 Days', 
+        price: 1500, 
+        location: 'Lalibela, Gondar, Axum',
+        image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23c41e3a"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="14"%3ELalibela%3C/text%3E%3C/svg%3E',
+        featured: true,
+        fullDescription: 'Visit the rock-hewn churches of Lalibela, the castles of Gondar, the monasteries of Bahir Dar, and the ancient obelisks of Axum.',
+        inclusions: ['Hotels (4-star)', 'Domestic flights', 'Transportation', 'Guide services', 'Meals'],
+        itinerary: [
+            { day: 1, title: 'Arrival in Addis Ababa', description: 'Welcome and transfer to hotel.' },
+            { day: 2, title: 'Fly to Lalibela', description: 'Visit the famous rock-hewn churches.' },
+            { day: 3, title: 'Lalibela to Gondar', description: 'Explore the castles of Gondar.' },
+            { day: 4, title: 'Gondar to Bahir Dar', description: 'Visit Lake Tana monasteries.' },
+            { day: 5, title: 'Bahir Dar to Axum', description: 'Visit the ancient obelisks.' },
+            { day: 6, title: 'Axum to Addis Ababa', description: 'Return to Addis Ababa.' },
+            { day: 7, title: 'Departure', description: 'Transfer to airport.' }
+        ]
+    },
+    { 
+        id: 2, 
+        name: 'Omo Valley Cultural Tour', 
+        category: 'cultural', 
+        duration: '6 Days', 
+        price: 1800,
+        location: 'Omo Valley',
+        image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23006b3f"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="14"%3EOmo%3C/text%3E%3C/svg%3E',
+        featured: true,
+        fullDescription: 'Discover the rich tribal cultures of the Omo Valley. Visit the Hamer, Mursi, Karo, and Dassanech tribes.',
+        inclusions: ['Hotels', 'Transportation', 'Guide services', 'Meals', 'Tribal visits'],
+        itinerary: [
+            { day: 1, title: 'Arrival in Addis Ababa', description: 'Transfer to hotel.' },
+            { day: 2, title: 'Fly to Jinka', description: 'Visit the Hamer tribe.' },
+            { day: 3, title: 'Mursi Tribe', description: 'Visit the Mursi people.' },
+            { day: 4, title: 'Karo Tribe', description: 'Visit the Karo people.' },
+            { day: 5, title: 'Dassanech Tribe', description: 'Visit the Dassanech people.' },
+            { day: 6, title: 'Return to Addis Ababa', description: 'Fly back.' }
+        ]
+    },
+    { 
+        id: 3, 
+        name: 'Simien Mountains Trek', 
+        category: 'trekking', 
+        duration: '5 Days', 
+        price: 950,
+        location: 'Simien Mountains',
+        image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23fcdd09"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="black" font-size="14"%3ESimien%3C/text%3E%3C/svg%3E',
+        featured: false,
+        fullDescription: 'Trek through the stunning Simien Mountains with breathtaking views and wildlife.',
+        inclusions: ['Camping', 'Guide', 'Scout', 'Meals'],
+        itinerary: [
+            { day: 1, title: 'Drive to Simien Mountains', description: 'Start trekking.' },
+            { day: 2, title: 'Trek to Sankaber', description: 'Trek through the mountains.' },
+            { day: 3, title: 'Trek to Geech', description: 'Continue trekking.' },
+            { day: 4, title: 'Trek to Chenek', description: 'Trek to the final camp.' },
+            { day: 5, title: 'Return to Gondar', description: 'Drive back.' }
+        ]
+    }
+];
+
+let allTours = toursData;
+let selectedTour = null;
+let currentUser = null;
+
+// ============================================================
+// FUNCTIONS
+// ============================================================
+
+function handleLogin() {
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    
+    if (email === 'admin@traverse.com' && password === 'admin123') {
+        currentUser = { name: 'Admin', role: 'admin' };
+    } else if (email && password.length >= 6) {
+        currentUser = { name: email.split('@')[0] || 'Guest', role: 'guest' };
+    } else {
+        alert('Please enter email and password (min 6 characters)');
+        return;
+    }
+    
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('mainApp').style.display = 'block';
+    document.getElementById('userNameDisplay').textContent = currentUser.name;
+    
+    renderTours();
+    showPage('home');
+}
+
+function logout() {
+    currentUser = null;
+    document.getElementById('mainApp').style.display = 'none';
+    document.getElementById('loginScreen').classList.remove('hidden');
+    document.getElementById('loginEmail').value = '';
+    document.getElementById('loginPassword').value = '';
+}
+
+function showPage(page) {
+    document.getElementById('page-home').style.display = page === 'home' ? 'block' : 'none';
+    document.getElementById('page-tours').style.display = page === 'tours' ? 'block' : 'none';
+    document.getElementById('page-detail').style.display = page === 'detail' ? 'block' : 'none';
+    document.getElementById('page-contact').style.display = page === 'contact' ? 'block' : 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderTours() {
+    const featuredContainer = document.getElementById('featuredTours');
+    const allContainer = document.getElementById('allTours');
+    
+    const featured = allTours.filter(t => t.featured);
+    
+    featuredContainer.innerHTML = featured.map(tour => createTourCard(tour)).join('');
+    allContainer.innerHTML = allTours.map(tour => createTourCard(tour)).join('');
+}
+
+function createTourCard(tour) {
+    return `
+        <div class="col-md-4">
+            <div class="tour-card">
+                <div class="card-img-top" style="background-image: url('${tour.image}'); background-size:cover; background-position:center;"></div>
+                <div class="card-body">
+                    <h5>${tour.name}</h5>
+                    <p class="text-muted small">${tour.duration} | ${tour.location || 'Ethiopia'}</p>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="price">$${tour.price}</span>
+                        <button class="btn btn-book btn-sm" onclick="viewTour(${tour.id})">View Details</button>
+                    </div>
+                </div>
+            </div>
         </div>
     `;
-} else {
-    // ============================================================
-    // VUE APP
-    // ============================================================
-    const { createApp, ref, computed } = Vue;
+}
 
-    const app = createApp({
-        setup() {
-            const isLoggedIn = ref(false);
-            const currentPage = ref('home');
-            const user = ref({ name: 'Guest' });
-            const userName = computed(() => user.value?.name || 'Guest');
-            const allTours = ref([]);
-            const selectedTour = ref(null);
+function viewTour(id) {
+    const tour = allTours.find(t => t.id === id);
+    if (!tour) return;
+    
+    selectedTour = tour;
+    showPage('detail');
+    renderTourDetail();
+}
 
-            // Sample tours data (will be replaced by API later)
-            const sampleTours = [
-                { id: 1, name: 'Historical Ethiopia Tour', duration: '7 Days', price: 1500, 
-                  image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23c41e3a"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="14"%3ELalibela%3C/text%3E%3C/svg%3E',
-                  featured: true, fullDescription: 'Visit Lalibela, Gondar, Axum.' },
-                { id: 2, name: 'Omo Valley Cultural Tour', duration: '6 Days', price: 1800,
-                  image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23006b3f"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="14"%3EOmo%3C/text%3E%3C/svg%3E',
-                  featured: true, fullDescription: 'Visit Hamer, Mursi, Karo tribes.' },
-                { id: 3, name: 'Simien Mountains Trek', duration: '5 Days', price: 950,
-                  image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23fcdd09"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="black" font-size="14"%3ESimien%3C/text%3E%3C/svg%3E',
-                  featured: false, fullDescription: 'Trek through the stunning mountains.' }
-            ];
+function renderTourDetail() {
+    const container = document.getElementById('tourDetailContent');
+    const tour = selectedTour;
+    if (!tour) return;
+    
+    let itineraryHtml = '';
+    if (tour.itinerary) {
+        itineraryHtml = tour.itinerary.map(item => `
+            <div class="d-flex gap-3 mb-3">
+                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:36px;height:36px;font-weight:bold;">${item.day}</div>
+                <div>
+                    <h6>${item.title}</h6>
+                    <p class="text-muted small">${item.description}</p>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    let inclusionsHtml = '';
+    if (tour.inclusions) {
+        inclusionsHtml = tour.inclusions.map(item => `
+            <li><i class="bi bi-check text-success me-2"></i> ${item}</li>
+        `).join('');
+    }
+    
+    container.innerHTML = `
+        <div class="row">
+            <div class="col-lg-8">
+                <img src="${tour.image}" class="img-fluid rounded-3 w-100" style="max-height:400px;object-fit:cover;">
+                <h1 class="mt-4">${tour.name}</h1>
+                <p class="text-muted"><i class="bi bi-clock me-2"></i> ${tour.duration}</p>
+                <p>${tour.fullDescription}</p>
+                
+                ${itineraryHtml ? `
+                    <div class="card p-4 my-4">
+                        <h5>Itinerary</h5>
+                        ${itineraryHtml}
+                    </div>
+                ` : ''}
+                
+                ${inclusionsHtml ? `
+                    <div class="card p-4 my-4">
+                        <h5><i class="bi bi-check-circle text-success me-2"></i> Inclusions</h5>
+                        <ul class="list-unstyled">${inclusionsHtml}</ul>
+                    </div>
+                ` : ''}
+            </div>
+            <div class="col-lg-4">
+                <div class="card p-4 sticky-top" style="top:100px;">
+                    <h5>Tour Price</h5>
+                    <span class="display-6 fw-bold text-primary">$${tour.price}</span>
+                    <span class="text-muted small">per person</span>
+                    <button class="btn btn-primary-custom w-100 mt-3" onclick="alert('Booking feature coming soon!')">Book Now</button>
+                    <hr>
+                    <div class="small text-muted">
+                        <p><i class="bi bi-shield-check me-1"></i> Secure booking</p>
+                        <p><i class="bi bi-credit-card me-1"></i> Pay on arrival</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
 
-            // Load tours from API or use sample
-            async function loadTours() {
-                try {
-                    const response = await fetch('/api/tours');
-                    const data = await response.json();
-                    if (data.length > 0) {
-                        allTours.value = data;
-                    } else {
-                        allTours.value = sampleTours;
-                    }
-                } catch (e) {
-                    allTours.value = sampleTours;
-                }
+function submitContact(e) {
+    e.preventDefault();
+    const name = document.getElementById('contactName').value;
+    const email = document.getElementById('contactEmail').value;
+    const message = document.getElementById('contactMessage').value;
+    
+    if (name && email && message) {
+        alert('✅ Message sent successfully! We will get back to you shortly.');
+        document.getElementById('contactName').value = '';
+        document.getElementById('contactEmail').value = '';
+        document.getElementById('contactMessage').value = '';
+        showPage('home');
+    }
+}
+
+// ============================================================
+// LOAD TOURS FROM API
+// ============================================================
+async function loadToursFromAPI() {
+    try {
+        const response = await fetch('/api/tours');
+        if (response.ok) {
+            const data = await response.json();
+            if (data.length > 0) {
+                allTours = data;
                 renderTours();
             }
-
-            // Render tours to DOM
-            function renderTours() {
-                const featuredContainer = document.getElementById('featuredTours');
-                const allContainer = document.getElementById('allTours');
-                
-                const featured = allTours.value.filter(t => t.featured);
-                const all = allTours.value;
-
-                // Render featured tours
-                featuredContainer.innerHTML = featured.map(tour => `
-                    <div class="col-md-4">
-                        <div class="tour-card">
-                            <div class="card-img-top" style="background-image: url('${tour.image}'); background-size:cover; background-position:center;"></div>
-                            <div class="card-body">
-                                <h5>${tour.name}</h5>
-                                <p class="text-muted small">${tour.duration}</p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <span class="price">$${tour.price}</span>
-                                    <button class="btn btn-outline-primary btn-sm" onclick="viewTour(${tour.id})">Details</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-
-                // Render all tours
-                allContainer.innerHTML = all.map(tour => `
-                    <div class="col-md-4">
-                        <div class="tour-card">
-                            <div class="card-img-top" style="background-image: url('${tour.image}'); background-size:cover; background-position:center;"></div>
-                            <div class="card-body">
-                                <h5>${tour.name}</h5>
-                                <p class="text-muted small">${tour.duration}</p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <span class="price">$${tour.price}</span>
-                                    <button class="btn btn-outline-primary btn-sm" onclick="viewTour(${tour.id})">Details</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-            // View tour detail
-            function viewTour(id) {
-                const tour = allTours.value.find(t => t.id === id);
-                if (tour) {
-                    selectedTour.value = tour;
-                    showPage('detail');
-                    renderDetail();
-                }
-            }
-
-            // Render tour detail
-            function renderDetail() {
-                const container = document.getElementById('tourDetailContent');
-                const tour = selectedTour.value;
-                if (!tour) return;
-                
-                container.innerHTML = `
-                    <div class="col-lg-8">
-                        <img src="${tour.image}" class="img-fluid rounded-3 w-100" style="max-height:400px;object-fit:cover;">
-                        <h1 class="mt-4">${tour.name}</h1>
-                        <p>${tour.fullDescription || 'Amazing tour experience.'}</p>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card p-4 sticky-top">
-                            <h5>Tour Price</h5>
-                            <span class="display-6 fw-bold text-primary">$${tour.price}</span>
-                            <span class="text-muted small">per person</span>
-                            <button class="btn btn-primary-custom w-100 mt-3">Book Now</button>
-                        </div>
-                    </div>
-                `;
-            }
-
-            // Show page
-            function showPage(page) {
-                currentPage.value = page;
-                document.getElementById('page-home').style.display = page === 'home' ? 'block' : 'none';
-                document.getElementById('page-tours').style.display = page === 'tours' ? 'block' : 'none';
-                document.getElementById('page-detail').style.display = page === 'detail' ? 'block' : 'none';
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-
-            // Login function - accessible globally
-            window.handleLogin = function() {
-                const email = document.getElementById('loginEmail').value;
-                const password = document.getElementById('loginPassword').value;
-                
-                if (email === 'admin@traverse.com' && password === 'admin123') {
-                    user.value = { name: 'Admin' };
-                } else {
-                    user.value = { name: email.split('@')[0] || 'Guest' };
-                }
-                isLoggedIn.value = true;
-                document.getElementById('mainApp').style.display = 'block';
-                document.getElementById('userNameDisplay').textContent = userName.value;
-                document.getElementById('loginScreen').classList.add('hidden');
-                showPage('home');
-                loadTours();
-            };
-
-            // Logout function
-            window.logout = function() {
-                isLoggedIn.value = false;
-                user.value = { name: 'Guest' };
-                document.getElementById('mainApp').style.display = 'none';
-                document.getElementById('loginScreen').classList.remove('hidden');
-                document.getElementById('loginEmail').value = '';
-                document.getElementById('loginPassword').value = '';
-            };
-
-            // View tour - accessible globally
-            window.viewTour = viewTour;
-            window.showPage = showPage;
-
-            return {
-                isLoggedIn,
-                currentPage,
-                user,
-                userName,
-                allTours,
-                selectedTour,
-                showPage,
-                viewTour,
-                loadTours
-            };
         }
-    });
-
-    app.mount('#app');
+    } catch (e) {
+        console.log('Using local tour data');
+    }
 }
+
+// ============================================================
+// INITIALIZE
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+    // Load tours
+    loadToursFromAPI();
+    
+    // Enter key for login
+    document.getElementById('loginPassword').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') handleLogin();
+    });
+    document.getElementById('loginEmail').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') handleLogin();
+    });
+});
 </script>
 
 </body>

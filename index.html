@@ -8,161 +8,69 @@
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet" />
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             background: #f8fafc;
             color: #1a1a2e;
             min-height: 100vh;
         }
-        :root {
-            --primary: #c41e3a;
-            --primary-dark: #a01830;
-            --primary-green: #006b3f;
-            --primary-gold: #fcdd09;
-            --dark: #1a1a2e;
+        .navbar-custom {
+            background: white !important;
+            padding: 16px 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.06);
         }
-
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: #c41e3a !important;
+        }
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.4));
+            color: white;
+            text-align: center;
+            padding: 60px 0;
+        }
+        .hero h1 { font-size: 3rem; font-weight: 900; }
+        .hero h1 span { color: #fcdd09; }
         .btn-primary-custom {
-            background: var(--primary);
+            background: #c41e3a;
             color: white;
             padding: 12px 32px;
             border-radius: 50px;
             font-weight: 600;
             border: none;
-            transition: all 0.3s ease;
         }
         .btn-primary-custom:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
+            background: #a01830;
             color: white;
         }
-
-        .navbar-custom {
-            background: white !important;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.06);
-            padding: 16px 0;
-        }
-        .navbar-brand {
-            font-weight: 800;
-            font-size: 1.4rem;
-            color: var(--primary) !important;
-        }
-        .navbar-brand .brand-icon {
-            background: var(--primary);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-        .nav-link {
-            font-weight: 500;
-            padding: 8px 18px !important;
-            color: var(--dark) !important;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .nav-link:hover { color: var(--primary) !important; }
-        .nav-link.active { color: var(--primary) !important; font-weight: 600; }
-
-        .hero {
-            min-height: 80vh;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 100%),
-                        url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%232d2d2d"/%3E%3C/svg%3E');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 60px 0;
-        }
-        .hero h1 { font-size: 4rem; font-weight: 900; }
-        .hero h1 span { color: var(--primary-gold); }
-        .hero p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 20px auto; }
-        .hero-badges {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .hero-badges .badge {
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: white;
-        }
-
         .tour-card {
             border: none;
             border-radius: 16px;
             overflow: hidden;
-            transition: all 0.3s ease;
             background: white;
             box-shadow: 0 2px 12px rgba(0,0,0,0.06);
             height: 100%;
         }
-        .tour-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,0.12); }
-        .tour-card .card-img-top { height: 220px; object-fit: cover; background: #e9ecef; }
+        .tour-card .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            background: #e9ecef;
+        }
         .tour-card .card-body { padding: 20px; }
-        .tour-card .price { font-size: 1.2rem; font-weight: 700; color: var(--primary); }
-        .tour-card .btn-book {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 6px 18px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
-        }
-        .tour-card .btn-book:hover { background: var(--primary-dark); transform: translateY(-2px); }
-        .tour-card .btn-outline-custom {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-            padding: 4px 16px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
-        }
-        .tour-card .btn-outline-custom:hover { background: var(--primary); color: white; }
-
-        .stats-section {
-            background: var(--dark);
-            color: white;
-            padding: 60px 0;
-        }
-        .stats-section .stat-number { font-size: 3rem; font-weight: 700; color: var(--primary-gold); }
-        .stats-section .stat-label { font-size: 0.9rem; opacity: 0.8; }
-
+        .price { font-size: 1.2rem; font-weight: 700; color: #c41e3a; }
         .footer {
-            background: var(--dark);
+            background: #1a1a2e;
             color: white;
-            padding: 50px 0 30px;
+            padding: 40px 0;
+            margin-top: 30px;
         }
-        .footer a {
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: block;
-            margin-bottom: 6px;
-        }
-        .footer a:hover { color: var(--primary-gold); }
-
         .login-screen {
             position: fixed;
             top: 0;
@@ -183,137 +91,61 @@
             padding: 40px 36px;
             width: 100%;
             max-width: 440px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.35);
-            animation: fadeUp 0.5s ease;
-        }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .modal-custom {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            border-radius: 24px;
-            z-index: 1050;
-            max-width: 700px;
-            width: 95%;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 0;
-        }
-        .modal-backdrop-custom {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1040;
-        }
-
-        .toast-container {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            z-index: 9999;
-        }
-        .toast-custom {
-            background: white;
-            padding: 15px 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            border-left: 4px solid var(--primary-green);
-            margin-bottom: 10px;
-            animation: slideIn 0.4s ease;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            min-width: 280px;
-        }
-        .toast-custom.error { border-left-color: #dc3545; }
-        .toast-custom.warning { border-left-color: #ffc107; }
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .hero { min-height: 60vh; }
-        }
-        @media (max-width: 576px) {
-            .hero h1 { font-size: 1.8rem; }
-            .login-container { padding: 28px 20px; }
         }
     </style>
 </head>
 <body>
 
-<!-- ===== SIMPLE VUE APP ===== -->
+<!-- ===== VUE APP ===== -->
 <div id="app">
+
     <!-- ===== LOGIN SCREEN ===== -->
     <div class="login-screen" :class="{ hidden: isLoggedIn }">
         <div class="login-container">
             <div style="text-align:center;margin-bottom:24px;">
                 <span style="font-size:3rem;">🇪🇹</span>
-                <h2 style="color:var(--primary);font-weight:800;">Traverse Ethiopia</h2>
-                <p style="color:#6c757d;font-size:0.9rem;">Sign in to your account</p>
+                <h2 style="color:#c41e3a;font-weight:800;">Traverse Ethiopia</h2>
+                <p style="color:#6c757d;">Sign in to your account</p>
             </div>
 
             <div>
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Email</label>
-                    <input v-model="loginForm.email" type="email" class="form-control" placeholder="your@email.com" style="border-radius:12px;padding:12px 16px;">
+                    <input v-model="loginForm.email" type="email" class="form-control" placeholder="your@email.com">
                 </div>
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Password</label>
-                    <input v-model="loginForm.password" type="password" class="form-control" placeholder="Enter your password" style="border-radius:12px;padding:12px 16px;">
+                    <input v-model="loginForm.password" type="password" class="form-control" placeholder="Enter your password">
                 </div>
                 <button class="btn btn-primary-custom w-100" @click="handleLogin" style="padding:14px;">🔓 Sign In</button>
-                <p class="text-center mt-2"><small class="text-muted">Admin: admin@traverse.com / admin123</small></p>
+                <p class="text-center mt-3"><small class="text-muted">Admin: admin@traverse.com / admin123</small></p>
             </div>
         </div>
     </div>
 
-    <!-- ===== MAIN APP (Logged In) ===== -->
+    <!-- ===== MAIN APP ===== -->
     <div v-if="isLoggedIn">
-        <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+
+        <!-- ===== NAVBAR ===== -->
+        <nav class="navbar navbar-expand-lg navbar-custom">
             <div class="container">
-                <a class="navbar-brand" href="#" @click.prevent="navigateTo('home')">
-                    <span class="brand-icon me-2">🇪🇹</span> Traverse Ethiopia
+                <a class="navbar-brand" href="#" @click.prevent="currentPage = 'home'">
+                    🇪🇹 Traverse Ethiopia
                 </a>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" :class="{active: currentPage === 'home'}" @click.prevent="navigateTo('home')">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" :class="{active: currentPage === 'tours'}" @click.prevent="navigateTo('tours')">Tours</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown">
-                            <span class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center me-1" style="width:32px;height:32px;font-weight:bold;">{{ userInitial }}</span>
-                            {{ userName }}
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item text-danger" href="#" @click.prevent="logout">🚪 Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                <div class="ms-auto">
+                    <span class="me-3">{{ userName }}</span>
+                    <button class="btn btn-sm btn-danger" @click="logout">Logout</button>
+                </div>
             </div>
         </nav>
 
-        <!-- ===== HOME PAGE ===== -->
+        <!-- ===== HOME ===== -->
         <div v-if="currentPage === 'home'">
             <section class="hero">
                 <div class="container">
-                    <div class="hero-badges">
-                        <span class="badge"><i class="bi bi-phone me-1"></i> Telebirr: 0911626671</span>
-                        <span class="badge"><i class="bi bi-airplane me-1"></i> Ethiopian Airlines</span>
-                        <span class="badge"><i class="bi bi-wifi me-1"></i> Ethio Telecom</span>
-                    </div>
                     <h1>Discover the <span>Hidden Wonders</span> of Ethiopia</h1>
-                    <p>From the rock-hewn churches of Lalibela to the tribal cultures of the Omo Valley.</p>
-                    <div class="d-flex gap-3 justify-content-center flex-wrap">
-                        <a href="#" class="btn btn-primary-custom" @click.prevent="navigateTo('tours')">Explore Tours</a>
-                    </div>
+                    <p class="lead">From rock-hewn churches to tribal cultures.</p>
+                    <button class="btn btn-primary-custom" @click="currentPage = 'tours'">Explore Tours</button>
                 </div>
             </section>
 
@@ -323,13 +155,13 @@
                     <div class="row g-4">
                         <div class="col-md-4" v-for="tour in featuredTours" :key="tour.id">
                             <div class="tour-card">
-                                <div class="card-img-top" :style="{backgroundImage: `url(${tour.image})`, backgroundSize:'cover', backgroundPosition:'center'}"></div>
+                                <div class="card-img-top" :style="{backgroundImage: `url(${tour.image})`}"></div>
                                 <div class="card-body">
                                     <h5>{{ tour.name }}</h5>
                                     <p class="text-muted small">{{ tour.duration }}</p>
                                     <div class="d-flex justify-content-between align-items-center mt-3">
                                         <span class="price">${{ tour.price }}</span>
-                                        <button class="btn btn-book btn-sm" @click="viewTour(tour.id)">Details</button>
+                                        <button class="btn btn-outline-primary btn-sm" @click="viewTour(tour.id)">Details</button>
                                     </div>
                                 </div>
                             </div>
@@ -339,43 +171,47 @@
             </section>
         </div>
 
-        <!-- ===== TOURS PAGE ===== -->
+        <!-- ===== TOURS ===== -->
         <div v-if="currentPage === 'tours'">
             <div class="container py-5">
                 <h1 class="text-center mb-4">All Tours</h1>
                 <div class="row g-4">
                     <div class="col-md-4" v-for="tour in allTours" :key="tour.id">
                         <div class="tour-card">
-                            <div class="card-img-top" :style="{backgroundImage: `url(${tour.image})`, backgroundSize:'cover', backgroundPosition:'center'}"></div>
+                            <div class="card-img-top" :style="{backgroundImage: `url(${tour.image})`}"></div>
                             <div class="card-body">
                                 <h5>{{ tour.name }}</h5>
                                 <p class="text-muted small">{{ tour.duration }}</p>
                                 <div class="d-flex justify-content-between align-items-center mt-3">
                                     <span class="price">${{ tour.price }}</span>
-                                    <button class="btn btn-book btn-sm" @click="viewTour(tour.id)">Details</button>
+                                    <button class="btn btn-outline-primary btn-sm" @click="viewTour(tour.id)">Details</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="text-center mt-4">
+                    <button class="btn btn-secondary" @click="currentPage = 'home'">Back to Home</button>
+                </div>
             </div>
         </div>
 
         <!-- ===== TOUR DETAIL ===== -->
-        <div v-if="currentPage === 'tourDetail' && selectedTour">
+        <div v-if="currentPage === 'detail' && selectedTour">
             <div class="container py-5">
                 <div class="row">
                     <div class="col-lg-8">
                         <img :src="selectedTour.image" class="img-fluid rounded-3 w-100" style="max-height:400px;object-fit:cover;">
                         <h1 class="mt-4">{{ selectedTour.name }}</h1>
                         <p>{{ selectedTour.fullDescription }}</p>
+                        <button class="btn btn-secondary" @click="currentPage = 'tours'">← Back to Tours</button>
                     </div>
                     <div class="col-lg-4">
-                        <div class="card p-4 sticky-top" style="top:100px;">
+                        <div class="card p-4 sticky-top">
                             <h5>Tour Price</h5>
                             <span class="display-6 fw-bold text-primary">${{ selectedTour.price }}</span>
                             <span class="text-muted small">per person</span>
-                            <button class="btn btn-primary-custom w-100 mt-3" @click="openBooking(selectedTour.id)">Book Now</button>
+                            <button class="btn btn-primary-custom w-100 mt-3">Book Now</button>
                         </div>
                     </div>
                 </div>
@@ -384,67 +220,12 @@
 
         <!-- ===== FOOTER ===== -->
         <footer class="footer">
-            <div class="container">
-                <div class="row g-4">
-                    <div class="col-md-4">
-                        <h5>🇪🇹 Traverse Ethiopia Tour</h5>
-                        <p class="text-muted">Explore Ethiopia's culture, nature, history & adventure with us.</p>
-                    </div>
-                    <div class="col-md-3">
-                        <h6>Contact</h6>
-                        <p><i class="bi bi-phone me-2"></i> +251 911 626 671</p>
-                        <p><i class="bi bi-envelope me-2"></i> travereseethiopia@gmail.com</p>
-                        <p><i class="bi bi-geo-alt me-2"></i> Addis Ababa, Ethiopia</p>
-                    </div>
-                </div>
-                <hr class="border-secondary">
-                <p class="text-center text-muted small">&copy; 2024 Traverse Ethiopia Tour. All rights reserved.</p>
+            <div class="container text-center">
+                <p>&copy; 2024 Traverse Ethiopia Tour. All rights reserved.</p>
+                <p><i class="bi bi-phone me-2"></i> +251 911 626 671</p>
             </div>
         </footer>
 
-        <!-- ===== BOOKING MODAL ===== -->
-        <div v-if="bookingModalOpen" class="modal-backdrop-custom" @click="bookingModalOpen = false"></div>
-        <div v-if="bookingModalOpen" class="modal-custom">
-            <div class="modal-header p-4 border-bottom d-flex justify-content-between align-items-center">
-                <h5 class="modal-title">Book Your Tour</h5>
-                <button class="btn-close" @click="bookingModalOpen = false"></button>
-            </div>
-            <div class="modal-body p-4">
-                <div class="bg-light p-3 rounded-3 mb-4">
-                    <h6>{{ bookingTour?.name || 'Tour' }}</h6>
-                    <span class="fw-bold text-primary fs-5">${{ bookingTour?.price || 0 }}</span>
-                </div>
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label">Full Name *</label>
-                        <input v-model="bookingForm.name" class="form-control" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Email *</label>
-                        <input v-model="bookingForm.email" type="email" class="form-control" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Phone *</label>
-                        <input v-model="bookingForm.phone" class="form-control" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Travel Date *</label>
-                        <input v-model="bookingForm.date" type="date" class="form-control" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Travelers *</label>
-                        <input v-model.number="bookingForm.travelers" type="number" min="1" class="form-control" required>
-                    </div>
-                </div>
-                <div class="mt-4 p-3 bg-light rounded-3">
-                    <span class="fw-bold">Total: ${{ calculateTotal() }}</span>
-                </div>
-            </div>
-            <div class="modal-footer p-4 border-top">
-                <button class="btn btn-secondary" @click="bookingModalOpen = false">Cancel</button>
-                <button class="btn btn-primary-custom" @click="submitBooking">Confirm Booking</button>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -457,14 +238,14 @@ VUE 3 - LOCAL FILE
 // Check if Vue loaded
 if (typeof Vue === 'undefined') {
     document.body.innerHTML = `
-        <div style="text-align:center;padding:50px;font-family:Arial;background:#f8fafc;">
-            <h2 style="color:#c41e3a;">⚠️ Vue.js Not Loaded</h2>
-            <p>Please check if vue.js file exists in the same folder.</p>
+        <div style="text-align:center;padding:50px;font-family:Arial;">
+            <h2 style="color:#c41e3a;">⚠️ Loading...</h2>
+            <p>Please refresh the page.</p>
             <button onclick="location.reload()" style="padding:10px 30px;background:#c41e3a;color:white;border:none;border-radius:8px;cursor:pointer;">Refresh</button>
         </div>
     `;
 } else {
-    // Vue loaded successfully - run app
+    // Simple Vue App
     const { createApp, ref, computed } = Vue;
 
     const app = createApp({
@@ -472,131 +253,63 @@ if (typeof Vue === 'undefined') {
             const isLoggedIn = ref(false);
             const currentPage = ref('home');
             const loginForm = ref({ email: '', password: '' });
-            const bookingModalOpen = ref(false);
-            const bookingTour = ref(null);
             const selectedTour = ref(null);
 
-            const user = ref({ id: 1, name: 'Guest User', email: 'guest@email.com', role: 'guest' });
-            const userName = computed(() => user.value?.name || 'User');
-            const userInitial = computed(() => user.value?.name?.charAt(0)?.toUpperCase() || 'U');
-
-            const bookingForm = ref({
-                name: '', email: '', phone: '',
-                date: '', travelers: 1
-            });
+            const user = ref({ name: 'Guest' });
+            const userName = computed(() => user.value?.name || 'Guest');
 
             const allTours = ref([
-                { 
-                    id: 1, 
-                    name: 'Historical Ethiopia Tour', 
-                    category: 'historical', 
-                    duration: '7 Days', 
-                    price: 1500, 
-                    image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23c41e3a"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="14"%3ELalibela%3C/text%3E%3C/svg%3E',
-                    featured: true,
-                    fullDescription: 'Visit the rock-hewn churches of Lalibela, the castles of Gondar.'
-                },
-                { 
-                    id: 2, 
-                    name: 'Omo Valley Cultural Tour', 
-                    category: 'cultural', 
-                    duration: '6 Days', 
-                    price: 1800, 
-                    image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23006b3f"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="14"%3EOmo Valley%3C/text%3E%3C/svg%3E',
-                    featured: true,
-                    fullDescription: 'Discover the rich tribal cultures of the Omo Valley.'
-                },
-                { 
-                    id: 3, 
-                    name: 'Simien Mountains Trek', 
-                    category: 'trekking', 
-                    duration: '5 Days', 
-                    price: 950, 
-                    image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23fcdd09"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="black" font-size="14"%3ESimien%3C/text%3E%3C/svg%3E',
-                    featured: false,
-                    fullDescription: 'Trek through the stunning Simien Mountains.'
-                }
+                { id: 1, name: 'Historical Ethiopia Tour', duration: '7 Days', price: 1500, 
+                  image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23c41e3a"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="14"%3ELalibela%3C/text%3E%3C/svg%3E',
+                  featured: true, fullDescription: 'Visit Lalibela, Gondar, Axum.' },
+                { id: 2, name: 'Omo Valley Cultural Tour', duration: '6 Days', price: 1800,
+                  image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23006b3f"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="white" font-size="14"%3EOmo%3C/text%3E%3C/svg%3E',
+                  featured: true, fullDescription: 'Visit Hamer, Mursi, Karo tribes.' },
+                { id: 3, name: 'Simien Mountains Trek', duration: '5 Days', price: 950,
+                  image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23fcdd09"/%3E%3Ctext x="50" y="55" text-anchor="middle" fill="black" font-size="14"%3ESimien%3C/text%3E%3C/svg%3E',
+                  featured: false, fullDescription: 'Trek through the stunning mountains.' }
             ]);
 
             const featuredTours = computed(() => allTours.value.filter(t => t.featured));
 
-            function navigateTo(page) {
-                currentPage.value = page;
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-
             function handleLogin() {
                 if (loginForm.value.email === 'admin@traverse.com' && loginForm.value.password === 'admin123') {
-                    user.value = { id: 1, name: 'Admin User', email: 'admin@traverse.com', role: 'admin' };
+                    user.value = { name: 'Admin' };
                     isLoggedIn.value = true;
-                    navigateTo('home');
                 } else {
-                    user.value = { id: 2, name: loginForm.value.email.split('@')[0] || 'Guest', email: loginForm.value.email, role: 'guest' };
+                    user.value = { name: loginForm.value.email.split('@')[0] || 'Guest' };
                     isLoggedIn.value = true;
-                    navigateTo('home');
                 }
                 loginForm.value = { email: '', password: '' };
+                currentPage.value = 'home';
             }
 
             function logout() {
                 isLoggedIn.value = false;
-                user.value = null;
-                navigateTo('home');
+                user.value = { name: 'Guest' };
+                currentPage.value = 'home';
             }
 
             function viewTour(id) {
                 const tour = allTours.value.find(t => t.id === id);
                 if (tour) {
                     selectedTour.value = tour;
-                    currentPage.value = 'tourDetail';
+                    currentPage.value = 'detail';
                 }
-            }
-
-            function openBooking(tourId) {
-                const tour = allTours.value.find(t => t.id === tourId);
-                if (tour) {
-                    bookingTour.value = tour;
-                    bookingForm.value = {
-                        name: '', email: '', phone: '',
-                        date: new Date().toISOString().split('T')[0],
-                        travelers: 1
-                    };
-                    bookingModalOpen.value = true;
-                }
-            }
-
-            function calculateTotal() {
-                const price = bookingTour.value?.price || 0;
-                const travelers = bookingForm.value.travelers || 1;
-                return price * travelers;
-            }
-
-            function submitBooking() {
-                alert('Booking confirmed! Total: $' + calculateTotal());
-                bookingModalOpen.value = false;
-                navigateTo('home');
             }
 
             return {
                 isLoggedIn,
                 currentPage,
                 loginForm,
-                bookingModalOpen,
-                bookingTour,
-                bookingForm,
                 selectedTour,
                 user,
                 userName,
-                userInitial,
                 allTours,
                 featuredTours,
-                navigateTo,
                 handleLogin,
                 logout,
-                viewTour,
-                openBooking,
-                calculateTotal,
-                submitBooking
+                viewTour
             };
         }
     });

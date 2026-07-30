@@ -1,0 +1,84 @@
+[
+  {
+    "name": "Historical Ethiopia Tour",
+    "location": "Lalibela, Gondar, Axum",
+    "duration": "7 Days",
+    "price": 1500,
+    "category": "historical",
+    "guide": "Tewodros Alemu",
+    "description": "Visit the rock-hewn churches of Lalibela, the castles of Gondar, the monasteries of Bahir Dar, and the ancient obelisks of Axum.",
+    "image": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600",
+    "featured": true,
+    "active": true,
+    "inclusions": ["Hotels (4-star)", "Domestic flights", "Transportation", "Guide services", "Meals"],
+    "itinerary": [
+      { "day": 1, "title": "Arrival in Addis Ababa", "description": "Welcome and transfer to hotel." },
+      { "day": 2, "title": "Fly to Lalibela", "description": "Visit the famous rock-hewn churches." },
+      { "day": 3, "title": "Lalibela to Gondar", "description": "Explore the castles of Gondar." },
+      { "day": 4, "title": "Gondar to Bahir Dar", "description": "Visit Lake Tana monasteries." },
+      { "day": 5, "title": "Bahir Dar to Axum", "description": "Visit the ancient obelisks." },
+      { "day": 6, "title": "Axum to Addis Ababa", "description": "Return to Addis Ababa." },
+      { "day": 7, "title": "Departure", "description": "Transfer to airport." }
+    ]
+  },
+  {
+    "name": "Omo Valley Cultural Tour",
+    "location": "Omo Valley",
+    "duration": "6 Days",
+    "price": 1800,
+    "category": "cultural",
+    "guide": "Mulugeta Bekele",
+    "description": "Discover the rich tribal cultures of the Omo Valley. Visit the Hamer, Mursi, Karo, and Dassanech tribes.",
+    "image": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600",
+    "featured": true,
+    "active": true,
+    "inclusions": ["Hotels", "Transportation", "Guide services", "Meals", "Tribal visits"],
+    "itinerary": [
+      { "day": 1, "title": "Arrival in Addis Ababa", "description": "Transfer to hotel." },
+      { "day": 2, "title": "Fly to Jinka", "description": "Visit the Hamer tribe." },
+      { "day": 3, "title": "Mursi Tribe", "description": "Visit the Mursi people." },
+      { "day": 4, "title": "Karo Tribe", "description": "Visit the Karo people." },
+      { "day": 5, "title": "Dassanech Tribe", "description": "Visit the Dassanech people." },
+      { "day": 6, "title": "Return to Addis Ababa", "description": "Fly back." }
+    ]
+  },
+  {
+    "name": "Simien Mountains Trek",
+    "location": "Simien Mountains",
+    "duration": "5 Days",
+    "price": 950,
+    "category": "trekking",
+    "guide": "Girma Tsegaye",
+    "description": "Trek through the stunning Simien Mountains with breathtaking views and wildlife.",
+    "image": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600",
+    "featured": false,
+    "active": true,
+    "inclusions": ["Camping", "Guide", "Scout", "Meals"],
+    "itinerary": [
+      { "day": 1, "title": "Drive to Simien Mountains", "description": "Start trekking." },
+      { "day": 2, "title": "Trek to Sankaber", "description": "Trek through the mountains." },
+      { "day": 3, "title": "Trek to Geech", "description": "Continue trekking." },
+      { "day": 4, "title": "Trek to Chenek", "description": "Trek to the final camp." },
+      { "day": 5, "title": "Return to Gondar", "description": "Drive back." }
+    ]
+  },
+  {
+    "name": "Danakil Depression Adventure",
+    "location": "Danakil Depression",
+    "duration": "4 Days",
+    "price": 2200,
+    "category": "adventure",
+    "guide": "Yonas Desta",
+    "description": "Experience the extreme beauty of the Danakil Depression, one of the hottest places on Earth with active volcanoes and salt flats.",
+    "image": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600",
+    "featured": true,
+    "active": true,
+    "inclusions": ["4x4 Transportation", "Camping", "Guide", "Meals", "Security"],
+    "itinerary": [
+      { "day": 1, "title": "Drive to Danakil", "description": "Drive from Mekele." },
+      { "day": 2, "title": "Erta Ale Volcano", "description": "Hike to the volcano." },
+      { "day": 3, "title": "Salt Flats", "description": "Visit the salt flats." },
+      { "day": 4, "title": "Return to Mekele", "description": "Drive back." }
+    ]
+  }
+]

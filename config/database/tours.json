@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Admin User",
+    "email": "admin@traverse.com",
+    "password": "$2b$10$hashedpassword123456789", 
+    "phone": "+251911626671",
+    "entityType": "admin",
+    "createdAt": "2024-01-15T10:30:00.000Z"
+  },
+  {
+    "name": "Sarah Johnson",
+    "email": "sarah.j@example.com",
+    "password": "$2b$10$samplehash123456789",
+    "phone": "+251912345678",
+    "entityType": "guest",
+    "createdAt": "2024-02-10T14:20:00.000Z"
+  },
+  {
+    "name": "Michael Chen",
+    "email": "michael.c@example.com",
+    "password": "$2b$10$samplehash987654321",
+    "phone": "+251913456789",
+    "entityType": "guest",
+    "createdAt": "2024-03-05T09:15:00.000Z"
+  },
+  {
+    "name": "Emma Williams",
+    "email": "emma.w@example.com",
+    "password": "$2b$10$samplehash456789123",
+    "phone": "+251914567890",
+    "entityType": "guest",
+    "createdAt": "2024-03-20T16:45:00.000Z"
+  }
+]
